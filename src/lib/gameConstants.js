@@ -16,6 +16,7 @@ export const ALL_GAMES = [
   { id: 'algebra-dungeon',      name: 'Algebra Dungeon',       emoji: '🗝️', xp: 110, path: '/games/algebra-dungeon' },
   { id: 'fraction-slicer',      name: 'Fraction Slicer',       emoji: '🍕', xp: 70,  path: '/games/fraction-slicer' },
   { id: 'number-sort-rush',     name: 'Number Sort Rush',      emoji: '🗂️', xp: 65,  path: '/games/number-sort-rush' },
+  { id: 'math-mole',            name: 'Math Mole',             emoji: '🔨', xp: 80,  path: '/games/math-mole' },
 ];
 
 export const GAME_ID_TO_NAME = Object.fromEntries(ALL_GAMES.map(g => [g.id, g.name]));
@@ -38,4 +39,5 @@ export const GAME_TOPIC_MAP = {
   'algebra-dungeon':     'Algebra',
   'fraction-slicer':    'Fractions',
   'number-sort-rush':   'Patterns',
+  'math-mole':          'Arithmetic',
 };

@@ -40,6 +40,7 @@ import IntegerMountain from './pages/IntegerMountain';
 import AlgebraDungeon from './pages/AlgebraDungeon';
 import FractionSlicer from './pages/FractionSlicer';
 import NumberSortRush from './pages/NumberSortRush';
+import MathMole from './pages/MathMole';
 
 function GameRoute({ children }) {
   return <div className="game-route-surface">{children}</div>;
@@ -150,6 +151,7 @@ function App() {
 
           <Route path="/games/fraction-slicer" element={<ProtectedRoute><GameRoute><FractionSlicer /></GameRoute></ProtectedRoute>} />
           <Route path="/games/number-sort-rush" element={<ProtectedRoute><GameRoute><NumberSortRush /></GameRoute></ProtectedRoute>} />
+          <Route path="/games/math-mole" element={<ProtectedRoute><GameRoute><MathMole /></GameRoute></ProtectedRoute>} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

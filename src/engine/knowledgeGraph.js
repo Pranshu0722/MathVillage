@@ -60,6 +60,7 @@ export const GAME_SKILLS = {
   MathRacing:           ['addition', 'multiplication'],
   FractionSlicer:       ['fractions-basic', 'equiv-fractions'],
   NumberSortRush:       ['division', 'patterns'],
+  MathMole:             ['multiplication', 'division'],
 };
 
 export function getPrereqs(skillId) {
