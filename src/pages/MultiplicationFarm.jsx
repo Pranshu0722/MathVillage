@@ -102,7 +102,7 @@ export default function MultiplicationFarm() {
             )}
           </AnimatePresence>
 
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {opts.map((n,i)=>(
               <button key={i} onClick={()=>handleAnswer(n)}
                 className={`py-4 rounded-2xl font-black text-2xl border-2 transition-all ${

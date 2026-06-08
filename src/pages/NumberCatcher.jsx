@@ -177,7 +177,7 @@ export default function NumberCatcher() {
               key={question.prompt}
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="text-8xl font-black text-gradient-orange mb-2"
+              className="text-5xl sm:text-7xl font-black text-gradient-orange mb-2"
             >
               {question.prompt}
             </motion.div>

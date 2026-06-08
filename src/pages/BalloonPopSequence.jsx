@@ -122,7 +122,7 @@ export default function BalloonPopSequence() {
                 <div className="h-8 mb-3" />
             )}
           </AnimatePresence>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {seq.choices.map((n,i)=>(
               <motion.button key={`${n}-${i}-${seq.answer}`} whileTap={{scale:0.9}} onClick={()=>handleAnswer(n)}
                 className="py-5 rounded-2xl font-black text-2xl border flex items-center justify-center shadow-sm"
