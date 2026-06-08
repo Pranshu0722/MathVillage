@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
-import { recordAttempt } from '../engine/engineAPI';
+import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
 
 const SKILL = skillForGame('DecimalMall'); // 'decimals'

@@ -4,7 +4,8 @@ import { ChevronLeft, Clock3, Trophy, Zap, Target, Sparkles, CheckCircle2, XCirc
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
 import { useGamification } from '../hooks/useGamification';
-import { getNextDifficulty, recordAttempt } from '../engine/engineAPI';
+import { getNextDifficulty } from '../engine/engineAPI';
+import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
 
 const SKILL = skillForGame('ArithmeticGame'); // 'addition'

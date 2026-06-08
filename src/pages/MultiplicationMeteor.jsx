@@ -4,7 +4,7 @@ import { ArrowLeft, Award, Crosshair, Flame, Rocket, RotateCcw, Shield } from 'l
 import { useGamification } from '../hooks/useGamification';
 import { useAuthStore } from '../store/useAuthStore';
 import { getGradeTier, normalizeGrade } from '../lib/gradeUtils';
-import { recordAttempt } from '../engine/engineAPI';
+import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
 
 const SKILL = skillForGame('MultiplicationMeteor'); // 'multiplication'
