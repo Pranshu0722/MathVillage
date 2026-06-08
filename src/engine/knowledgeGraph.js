@@ -58,6 +58,8 @@ export const GAME_SKILLS = {
   BalloonPopSequence:   ['counting', 'patterns'],
   FruitRush:            ['addition', 'multiplication'],
   MathRacing:           ['addition', 'multiplication'],
+  FractionSlicer:       ['fractions-basic', 'equiv-fractions'],
+  NumberSortRush:       ['division', 'patterns'],
 };
 
 export function getPrereqs(skillId) {

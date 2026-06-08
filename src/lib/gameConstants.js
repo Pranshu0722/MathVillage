@@ -14,6 +14,8 @@ export const ALL_GAMES = [
   { id: 'coordinate-treasure',  name: 'Treasure Map',          emoji: '🗺️', xp: 90,  path: '/games/coordinate-treasure' },
   { id: 'integer-mountain',     name: 'Integer Mountain',      emoji: '🏔️', xp: 100, path: '/games/integer-mountain' },
   { id: 'algebra-dungeon',      name: 'Algebra Dungeon',       emoji: '🗝️', xp: 110, path: '/games/algebra-dungeon' },
+  { id: 'fraction-slicer',      name: 'Fraction Slicer',       emoji: '🍕', xp: 70,  path: '/games/fraction-slicer' },
+  { id: 'number-sort-rush',     name: 'Number Sort Rush',      emoji: '🗂️', xp: 65,  path: '/games/number-sort-rush' },
 ];
 
 export const GAME_ID_TO_NAME = Object.fromEntries(ALL_GAMES.map(g => [g.id, g.name]));
@@ -34,4 +36,6 @@ export const GAME_TOPIC_MAP = {
   'coordinate-treasure': 'Geometry',
   'integer-mountain':    'Arithmetic',
   'algebra-dungeon':     'Algebra',
+  'fraction-slicer':    'Fractions',
+  'number-sort-rush':   'Patterns',
 };
