@@ -240,7 +240,7 @@ export function createApp() {
     }
   });
 
-  app.get('/api/teacher/students', auth, async (req, res) => {
+  app.get('/api/teacher/students', auth, requireTeacher, async (req, res) => {
     try {
       const students = await User.find({ role: 'student' });
       const studentData = await Promise.all(students.map(async (s) => {
@@ -268,7 +268,7 @@ export function createApp() {
     }
   });
 
-  app.post('/api/teacher/assign-support', auth, async (req, res) => {
+  app.post('/api/teacher/assign-support', auth, requireTeacher, async (req, res) => {
     try {
       const { studentId, gameId, topic } = req.body;
       const progress = await Progress.findOneAndUpdate(
