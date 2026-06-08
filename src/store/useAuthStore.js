@@ -126,6 +126,23 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
+  async changePassword(currentPassword, newPassword) {
+    try {
+      const state = get();
+      if (!state.token) return { success: false, error: 'Not authenticated.' };
+      const resp = await fetch(`${API_BASE}/auth/change-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${state.token}` },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) return { success: false, error: data.error };
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  },
+
   updateUser(patch) {
     const updated = { ...get().user, ...patch };
     localStorage.setItem(

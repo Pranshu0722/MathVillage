@@ -239,6 +239,30 @@ export function createApp() {
     }
   });
 
+  app.post('/api/auth/change-password', auth, async (req, res) => {
+    try {
+      const { currentPassword, newPassword } = req.body;
+      if (!currentPassword || !newPassword)
+        return res.status(400).send({ error: 'Current and new password are required.' });
+      if (newPassword.length < 6)
+        return res.status(400).send({ error: 'New password must be at least 6 characters.' });
+      if (newPassword.length > 128)
+        return res.status(400).send({ error: 'New password must be at most 128 characters.' });
+
+      const user = await User.findById(req.userId);
+      if (!user) return res.status(404).send({ error: 'User not found.' });
+
+      const match = await bcrypt.compare(currentPassword, user.password);
+      if (!match) return res.status(400).send({ error: 'Current password is incorrect.' });
+
+      user.password = await bcrypt.hash(newPassword, 8);
+      await user.save();
+      res.send({ success: true });
+    } catch (e) {
+      res.status(500).send({ error: e.message });
+    }
+  });
+
   app.delete('/api/auth/account', auth, async (req, res) => {
     try {
       // Delete user and their progress
