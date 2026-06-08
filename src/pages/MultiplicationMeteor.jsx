@@ -266,15 +266,15 @@ export default function MultiplicationMeteor() {
                 <Rocket size={24} className="text-cyan-300" />
                 <h1 className="font-display text-2xl font-black leading-none">Multiplication Meteor Defense</h1>
               </div>
-              <p className="mt-1 text-sm font-semibold text-slate-300">Type the product on a falling object and press Enter to shoot it.</p>
+              <p className="mt-1 text-sm font-semibold text-slate-100">Type the product on a falling object and press Enter to shoot it.</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-2">
-            <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Score</p><p className="text-base font-black tabular-nums">{score}</p></div>
-            <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Hits</p><p className="text-base font-black tabular-nums text-cyan-300">{hits}/{difficulty.limit}</p></div>
-            <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Misses</p><p className="text-base font-black tabular-nums text-rose-300">{misses}/{MAX_MISSES}</p></div>
-            <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Combo</p><p className="text-base font-black tabular-nums text-amber-300">{combo}x</p></div>
+          <div className="flex flex-wrap gap-2">
+            <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-center sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Score</p><p className="text-sm font-black tabular-nums sm:text-base">{score}</p></div>
+            <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-center sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Hits</p><p className="text-sm font-black tabular-nums text-cyan-300 sm:text-base">{hits}/{difficulty.limit}</p></div>
+            <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-center sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Misses</p><p className="text-sm font-black tabular-nums text-rose-300 sm:text-base">{misses}/{MAX_MISSES}</p></div>
+            <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-center sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Combo</p><p className="text-sm font-black tabular-nums text-amber-300 sm:text-base">{combo}x</p></div>
           </div>
         </header>
 

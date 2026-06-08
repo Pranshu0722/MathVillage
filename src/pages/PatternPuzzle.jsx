@@ -329,11 +329,11 @@ export default function PatternPuzzle() {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-2">
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Score</p><p className="text-base font-black tabular-nums">{score}</p></div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Round</p><p className="text-base font-black tabular-nums">{Math.min(roundIndex + 1, totalRounds)}/{totalRounds}</p></div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Timer</p><p className="text-base font-black tabular-nums text-cyan-700">{timer}s</p></div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Mistakes</p><p className="text-base font-black tabular-nums text-rose-700">{mistakes}/3</p></div>
+          <div className="flex flex-wrap gap-2">
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Score</p><p className="text-sm font-black tabular-nums sm:text-base">{score}</p></div>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Round</p><p className="text-sm font-black tabular-nums sm:text-base">{Math.min(roundIndex + 1, totalRounds)}/{totalRounds}</p></div>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Timer</p><p className="text-sm font-black tabular-nums text-cyan-700 sm:text-base">{timer}s</p></div>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Mistakes</p><p className="text-sm font-black tabular-nums text-rose-700 sm:text-base">{mistakes}/3</p></div>
           </div>
         </header>
 

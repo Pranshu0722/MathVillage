@@ -379,11 +379,11 @@ export default function IntegerMountain() {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-2">
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Score</p><p className="text-base font-black tabular-nums">{score}</p></div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Oxygen</p><p className="text-base font-black tabular-nums text-cyan-700">{Math.max(0, oxygenLeft)}</p></div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Rescues</p><p className="text-base font-black tabular-nums text-emerald-700">{rescues}/{missions.length}</p></div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm"><p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Accuracy</p><p className="text-base font-black tabular-nums">{accuracy}%</p></div>
+          <div className="flex flex-wrap gap-2">
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Score</p><p className="text-sm font-black tabular-nums sm:text-base">{score}</p></div>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Oxygen</p><p className="text-sm font-black tabular-nums text-cyan-700 sm:text-base">{Math.max(0, oxygenLeft)}</p></div>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Rescues</p><p className="text-sm font-black tabular-nums text-emerald-700 sm:text-base">{rescues}/{missions.length}</p></div>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2"><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Accuracy</p><p className="text-sm font-black tabular-nums sm:text-base">{accuracy}%</p></div>
           </div>
         </header>
 
