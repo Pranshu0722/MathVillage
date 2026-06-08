@@ -45,3 +45,6 @@ data/dkt_sequences.npz
 
 # Seeded test-account credentials (contains passwords — never commit)
 seed-students-credentials.md
+
+# Project report PDF
+*.pdf
