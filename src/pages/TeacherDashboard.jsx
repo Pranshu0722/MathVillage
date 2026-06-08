@@ -481,9 +481,9 @@ export default function TeacherDashboard() {
           <motion.button
             whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
             onClick={handleExport}
-            className="flex items-center gap-2 px-6 py-4 bg-white rounded-2xl shadow-sm border border-slate-100 font-black text-slate-600 hover:text-[#5EDAD0] transition-colors"
+            className="flex items-center gap-2 px-4 md:px-6 py-4 bg-white rounded-2xl shadow-sm border border-slate-100 font-black text-slate-600 hover:text-[#5EDAD0] transition-colors"
           >
-            <Download size={18} /> Export Data
+            <Download size={18} /> <span className="hidden md:inline">Export Data</span>
           </motion.button>
 
           <Link to="/" className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 hover:text-[#FF7052] transition-colors">
@@ -704,7 +704,7 @@ export default function TeacherDashboard() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white/8 border border-white/15 rounded-lg px-2 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-primary/50"
+              className="bg-[#F7F9FC] border border-slate-100 rounded-2xl px-4 py-3 text-sm font-black text-slate-500 focus:outline-none focus:border-[#5EDAD0] shadow-inner"
             >
               <option value="xp">Sort: XP</option>
               <option value="accuracy">Sort: Accuracy</option>
@@ -719,12 +719,12 @@ export default function TeacherDashboard() {
             <thead>
               <tr className="border-b border-white/10 text-slate-400 text-xs uppercase tracking-wider">
                 <th className="p-3 font-semibold">Student</th>
-                <th className="p-3 font-semibold">Grade</th>
-                <th className="p-3 font-semibold">Level</th>
+                <th className="p-3 font-semibold hidden sm:table-cell">Grade</th>
+                <th className="p-3 font-semibold hidden md:table-cell">Level</th>
                 <th className="p-3 font-semibold">XP</th>
-                <th className="p-3 font-semibold">Accuracy</th>
-                <th className="p-3 font-semibold">Games</th>
-                <th className="p-3 font-semibold">Streak</th>
+                <th className="p-3 font-semibold hidden sm:table-cell">Accuracy</th>
+                <th className="p-3 font-semibold hidden lg:table-cell">Games</th>
+                <th className="p-3 font-semibold hidden lg:table-cell">Streak</th>
                 <th className="p-3 font-semibold">Status</th>
                 <th className="p-3 font-semibold text-right">Actions</th>
               </tr>
@@ -753,10 +753,10 @@ export default function TeacherDashboard() {
                         <span className="font-medium text-slate-200">{student?.name || 'Unknown'}</span>
                       </div>
                     </td>
-                    <td className="p-3"><span className="badge badge-orange text-xs">Gr {student?.grade || 'N/A'}</span></td>
-                    <td className="p-3"><span className="badge badge-primary text-xs">Lv {student?.level || 1}</span></td>
+                    <td className="p-3 hidden sm:table-cell"><span className="badge badge-orange text-xs">Gr {student?.grade || 'N/A'}</span></td>
+                    <td className="p-3 hidden md:table-cell"><span className="badge badge-primary text-xs">Lv {student?.level || 1}</span></td>
                     <td className="p-3 font-semibold text-primary">{(student?.xp || 0).toLocaleString()}</td>
-                    <td className="p-3">
+                    <td className="p-3 hidden sm:table-cell">
                       <div className="flex items-center gap-2">
                         <div className="w-16 progress-bar" style={{ height: '5px' }}>
                           <div
@@ -772,8 +772,8 @@ export default function TeacherDashboard() {
                         <span className="text-xs text-slate-300">{student?.accuracy || 0}%</span>
                       </div>
                     </td>
-                    <td className="p-3 text-slate-300">{student?.gamesPlayed || 0}</td>
-                    <td className="p-3 text-orange-400 font-semibold">🔥 {student?.streak || 0}</td>
+                    <td className="p-3 text-slate-300 hidden lg:table-cell">{student?.gamesPlayed || 0}</td>
+                    <td className="p-3 text-orange-400 font-semibold hidden lg:table-cell">🔥 {student?.streak || 0}</td>
                     <td className="p-3">
                       <span className={`badge text-xs ${sc.badge}`}>{sc.icon} {sc.label}</span>
                     </td>
