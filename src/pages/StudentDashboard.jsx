@@ -51,7 +51,7 @@ const GRADE_ZONES = [
     gradient: 'linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #1e3a8a 100%)',
     glow: '#38bdf8', accent: '#7dd3fc', textColor: '#bae6fd',
     scenery: '🌊🐟🚤⛵🌴',
-    games: buildGames(['decimal-mall', 'fraction-ninja', 'patterns', 'number-sort-rush'], 3),
+    games: buildGames(['decimal-mall', 'fraction-ninja', 'patterns', 'number-sort-rush', 'math-mole'], 3),
   },
   {
     grade: 5, label: 'Grade 5', emoji: '🌲', title: 'Forest Camp',
