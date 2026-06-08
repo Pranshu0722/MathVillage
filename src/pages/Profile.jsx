@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import BadgeDisplay from '../components/BadgeDisplay';
@@ -9,10 +10,26 @@ const AVATARS=['🧒','👧','👦','🧑','👩','👨','🧒🏽','👧🏽'];
 
 export default function Profile() {
   const player=usePlayerStore();
-  const {user, updateUser, deleteAccount} = useAuthStore();
+  const {user, updateUser, deleteAccount, changePassword} = useAuthStore();
+  const [pwForm, setPwForm] = useState({ current: '', next: '', confirm: '' });
+  const [pwMsg, setPwMsg] = useState(null);
   const xpForLevel=(lvl)=>Math.pow(lvl,2)*100;
   const xpForPrev=(lvl)=>Math.pow(Math.max(1,lvl-1),2)*100;
   const pct=Math.min(100,Math.round(((player.xp-xpForPrev(player.level))/(xpForLevel(player.level)-xpForPrev(player.level)))*100))||0;
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    setPwMsg(null);
+    if (pwForm.next !== pwForm.confirm) return setPwMsg({ error: true, text: 'New passwords do not match.' });
+    if (pwForm.next.length < 6) return setPwMsg({ error: true, text: 'New password must be at least 6 characters.' });
+    const result = await changePassword(pwForm.current, pwForm.next);
+    if (result.success) {
+      setPwMsg({ error: false, text: 'Password changed successfully.' });
+      setPwForm({ current: '', next: '', confirm: '' });
+    } else {
+      setPwMsg({ error: true, text: result.error || 'Failed to change password.' });
+    }
+  };
 
   const handleDeleteAccount = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete your account? This action cannot be undone.');
@@ -32,8 +49,6 @@ export default function Profile() {
       alert('Failed to delete account. Please try again.');
     }
   };
-
-  
 
   return(
     <div className="pb-12 max-w-2xl mx-auto">
@@ -109,9 +124,39 @@ export default function Profile() {
         <BadgeDisplay/>
       </motion.div>
 
+      {/* Change Password */}
+      {user?.password !== undefined && (
+        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:0.25}} className="bg-white rounded-3xl p-5 mb-6 shadow-sm border border-slate-100">
+          <h3 className="font-display font-bold text-lg mb-4 text-slate-800">🔒 Change Password</h3>
+          <form onSubmit={handleChangePassword} className="space-y-3">
+            <input
+              type="password" placeholder="Current password" value={pwForm.current}
+              onChange={e => setPwForm(f => ({ ...f, current: e.target.value }))}
+              className="w-full border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-primary"
+            />
+            <input
+              type="password" placeholder="New password (min 6 chars)" value={pwForm.next}
+              onChange={e => setPwForm(f => ({ ...f, next: e.target.value }))}
+              className="w-full border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-primary"
+            />
+            <input
+              type="password" placeholder="Confirm new password" value={pwForm.confirm}
+              onChange={e => setPwForm(f => ({ ...f, confirm: e.target.value }))}
+              className="w-full border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-primary"
+            />
+            {pwMsg && (
+              <p className={`text-sm font-medium ${pwMsg.error ? 'text-red-500' : 'text-emerald-500'}`}>{pwMsg.text}</p>
+            )}
+            <button type="submit" className="w-full bg-primary text-white py-2 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
+              Update Password
+            </button>
+          </form>
+        </motion.div>
+      )}
+
       <div className="text-center mt-6">
-        <button 
-          onClick={handleDeleteAccount} 
+        <button
+          onClick={handleDeleteAccount}
           className="btn btn-danger bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
           Delete Account
         </button>
