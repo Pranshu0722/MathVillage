@@ -42,43 +42,8 @@ const TOPIC_ACCURACY = [
   { topic: 'Patterns',     accuracy: 79 },
 ];
 
-// Map gameIds to display names (uses kebab-case keys matching the client store)
-const GAME_ID_TO_NAME = {
-  'arithmetic': 'Number Ninja',
-  'number-catcher': 'Number Catcher',
-  'balloon-pop': 'Balloon Pop',
-  'geometry': 'Shape Explorer',
-  'meteor': 'Multiplication Meteor',
-  'fractions': 'Fraction Frenzy',
-  'farm-multiply': 'Multiplication Farm',
-  'math-racing': 'Math Racing',
-  'balancer': 'Equation Balancer',
-  'decimal-mall': 'Decimal Mall',
-  'fraction-ninja': 'Fraction Ninja',
-  'patterns': 'Pattern Puzzle',
-  'coordinate-treasure': 'Treasure Map',
-  'integer-mountain': 'Integer Mountain',
-  'algebra-dungeon': 'Algebra Dungeon',
-};
+import { GAME_ID_TO_NAME, GAME_TOPIC_MAP } from '../lib/gameConstants';
 
-// Map known gameIds to high-level topics for accuracy aggregation.
-const GAME_TOPIC_MAP = {
-  'arithmetic': 'Arithmetic',
-  'number-catcher': 'Arithmetic',
-  'balloon-pop': 'Arithmetic',
-  'geometry': 'Geometry',
-  'meteor': 'Arithmetic',
-  'fractions': 'Fractions',
-  'farm-multiply': 'Arithmetic',
-  'math-racing': 'Arithmetic',
-  'balancer': 'Algebra',
-  'decimal-mall': 'Decimals',
-  'fraction-ninja': 'Fractions',
-  'patterns': 'Patterns',
-  'coordinate-treasure': 'Geometry',
-  'integer-mountain': 'Arithmetic',
-  'algebra-dungeon': 'Algebra',
-};
 
 const SUPPORT_TASKS = [
   { id: 'arithmetic', topic: 'Arithmetic', label: 'Number Basics' },

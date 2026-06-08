@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { saveProgress, loadProgress, pushToSyncQueue, saveGameSession, trackSyncWrite } from '../lib/db';
+import { GAME_ID_TO_NAME } from '../lib/gameConstants';
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -22,23 +23,6 @@ const ALL_BADGES = [
   { id: 'coins_1000',    label: 'Village Merchant',icon: '💰', desc: 'Earn 1000 coins',             condition: (s) => s.coins >= 1000 },
 ];
 
-const GAME_ID_TO_NAME = {
-  'arithmetic': 'Number Ninja',
-  'number-catcher': 'Number Catcher',
-  'balloon-pop': 'Balloon Pop',
-  'geometry': 'Shape Explorer',
-  'meteor': 'Multiplication Meteor',
-  'fractions': 'Fraction Frenzy',
-  'farm-multiply': 'Multiplication Farm',
-  'math-racing': 'Math Racing',
-  'balancer': 'Equation Balancer',
-  'decimal-mall': 'Decimal Mall',
-  'fraction-ninja': 'Fraction Ninja',
-  'patterns': 'Pattern Puzzle',
-  'coordinate-treasure': 'Treasure Map',
-  'integer-mountain': 'Integer Mountain',
-  'algebra-dungeon': 'Algebra Dungeon'
-};
 
 const DAILY_MISSIONS_POOL = [
   { id: 'dm_play2',    text: 'Play 2 games today',        target: 2,  type: 'games',    reward: { xp: 50, coins: 20 } },

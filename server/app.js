@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 import rateLimit from 'express-rate-limit';
 import { User, Progress } from './models.js';
+import { GAME_ID_TO_NAME } from '../src/lib/gameConstants.js';
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -13,25 +14,6 @@ const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
-
-// Game ID to display name mapping for enriching history entries
-const GAME_ID_TO_NAME = {
-  'arithmetic': 'Number Ninja',
-  'number-catcher': 'Number Catcher',
-  'balloon-pop': 'Balloon Pop',
-  'geometry': 'Shape Explorer',
-  'meteor': 'Multiplication Meteor',
-  'fractions': 'Fraction Frenzy',
-  'farm-multiply': 'Multiplication Farm',
-  'math-racing': 'Math Racing',
-  'balancer': 'Equation Balancer',
-  'decimal-mall': 'Decimal Mall',
-  'fraction-ninja': 'Fraction Ninja',
-  'patterns': 'Pattern Puzzle',
-  'coordinate-treasure': 'Treasure Map',
-  'integer-mountain': 'Integer Mountain',
-  'algebra-dungeon': 'Algebra Dungeon',
-};
 
 function hasCompletedAssignedSupport(progress) {
   const assigned = progress?.assignedSupport;

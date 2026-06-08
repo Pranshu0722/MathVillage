@@ -3,24 +3,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import BadgeDisplay from '../components/BadgeDisplay';
-
-const GAME_ID_TO_NAME = {
-  'arithmetic': 'Number Ninja',
-  'number-catcher': 'Number Catcher',
-  'balloon-pop': 'Balloon Pop',
-  'geometry': 'Shape Explorer',
-  'meteor': 'Multiplication Meteor',
-  'fractions': 'Fraction Frenzy',
-  'farm-multiply': 'Multiplication Farm',
-  'math-racing': 'Math Racing',
-  'balancer': 'Equation Balancer',
-  'decimal-mall': 'Decimal Mall',
-  'fraction-ninja': 'Fraction Ninja',
-  'patterns': 'Pattern Puzzle',
-  'coordinate-treasure': 'Treasure Map',
-  'integer-mountain': 'Integer Mountain',
-  'algebra-dungeon': 'Algebra Dungeon'
-};
+import { GAME_ID_TO_NAME } from '../lib/gameConstants';
 
 const AVATARS=['🧒','👧','👦','🧑','👩','👨','🧒🏽','👧🏽'];
 
