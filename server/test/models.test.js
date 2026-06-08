@@ -6,7 +6,7 @@ import { Progress } from '../models.js';
 let mongod;
 
 beforeAll(async () => {
-  mongod = await MongoMemoryServer.create();
+  mongod = await MongoMemoryServer.create({ instance: { startupTimeout: 60000 } });
   await mongoose.connect(mongod.getUri());
 });
 

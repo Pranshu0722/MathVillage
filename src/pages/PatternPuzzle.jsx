@@ -4,7 +4,8 @@ import { ArrowLeft, CheckCircle2, Grid3X3, RotateCcw, ShieldAlert, Sparkles, Tim
 import { useGamification } from '../hooks/useGamification';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
-import { getNextDifficulty, recordAttempt } from '../engine/engineAPI';
+import { getNextDifficulty } from '../engine/engineAPI';
+import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
 
 const SKILL = skillForGame('PatternPuzzle'); // 'patterns'

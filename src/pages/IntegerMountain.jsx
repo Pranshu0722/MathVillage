@@ -4,7 +4,7 @@ import { ArrowLeft, Flag, MapPinned, Mountain, RotateCcw, ShieldCheck, Sigma, Wi
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
-import { recordAttempt } from '../engine/engineAPI';
+import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
 
 const SKILL = skillForGame('IntegerMountain'); // 'integers'

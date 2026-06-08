@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useAuthStore } from './store/useAuthStore';
 import { useSyncStore } from './store/useSyncStore';
 import { usePlayerStore } from './store/usePlayerStore';
@@ -57,26 +58,41 @@ function App() {
   const { isAuthenticated, role } = useAuthStore();
   const { setStatus, initListeners } = useSyncStore();
   const { hydrate } = usePlayerStore();
+  const [engineError, setEngineError] = useState(false);
 
   useEffect(() => {
-    // Init offline sync engine
     initSyncEngine(setStatus);
-    // If the user clicked Sync, reload first and then process the queue once.
     if (sessionStorage.getItem('mv_sync_after_reload') === '1') {
       sessionStorage.removeItem('mv_sync_after_reload');
       processSyncQueue(setStatus).catch(() => {});
     }
-    // Init online/offline listeners
     initListeners();
-    // Hydrate player data from IndexedDB
     hydrate();
-    // Hydrate the adaptive learning engine from IndexedDB (once, at startup)
     initEngine().catch(() => {});
+
+    const handleEngineError = () => {
+      setEngineError(true);
+      setTimeout(() => setEngineError(false), 4000);
+    };
+    window.addEventListener('game-engine-error', handleEngineError);
+    return () => window.removeEventListener('game-engine-error', handleEngineError);
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col relative w-full overflow-x-hidden">
       <InstallPrompter />
+      <AnimatePresence>
+        {engineError && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-lg"
+          >
+            Progress tracking failed — your game score is still saved locally.
+          </motion.div>
+        )}
+      </AnimatePresence>
       {isAuthenticated && <Navbar />}
 
       <main className="flex-1 w-full relative">
