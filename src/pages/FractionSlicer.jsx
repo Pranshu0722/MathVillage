@@ -248,26 +248,16 @@ export default function FractionSlicer() {
           <div className="space-y-4">
             {/* Target + timer bar */}
             <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2">Shade this fraction</p>
-                  <div className="flex items-center gap-3">
-                    <div className="flex flex-col items-center leading-none">
-                      <span className="text-4xl font-black text-violet-700">{numer}</span>
-                      <div className="my-1 h-[3px] w-10 rounded bg-violet-700" />
-                      <span className="text-4xl font-black text-violet-700">{denom}</span>
-                    </div>
-                    <p className="text-sm font-semibold text-slate-600">
-                      Click <strong className="text-slate-900">{numer}</strong> of <strong className="text-slate-900">{denom}</strong> pizza slices
-                    </p>
-                  </div>
+              <p className="text-xs font-bold uppercase tracking-wide text-slate-400 mb-3 text-center">Shade this fraction</p>
+              <div className="flex items-center justify-center gap-5 mb-4">
+                <div className="flex flex-col items-center leading-none">
+                  <span className="text-5xl font-black text-violet-700">{numer}</span>
+                  <div className="my-1.5 h-[3px] w-12 rounded bg-violet-700" />
+                  <span className="text-5xl font-black text-violet-700">{denom}</span>
                 </div>
-                <div className="text-right">
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-400 mb-1">Shaded</p>
-                  <p className={`text-3xl font-black transition-colors ${shaded.size === numer ? 'text-emerald-600' : 'text-slate-800'}`}>
-                    {shaded.size}<span className="text-lg text-slate-400">/{denom}</span>
-                  </p>
-                </div>
+                <p className="text-sm font-semibold text-slate-600">
+                  Click <strong className="text-slate-900">{numer}</strong> of <strong className="text-slate-900">{denom}</strong> pizza slices
+                </p>
               </div>
               <div className="rounded-full bg-slate-100 h-2.5 overflow-hidden">
                 <div className={`h-full rounded-full transition-all duration-1000 ${timerColor}`} style={{ width: `${timerPct}%` }} />
@@ -277,9 +267,6 @@ export default function FractionSlicer() {
 
             {/* Pizza + result overlay */}
             <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400 text-center">
-                Click slices to shade · {shaded.size === numer ? '✓ Ready to check!' : `${numer - shaded.size > 0 ? numer - shaded.size : 'Too many!'} more to go`}
-              </p>
               <div className="relative flex justify-center">
                 <PizzaBoard denom={denom} shaded={shaded} onToggle={toggleSlice} locked={status !== 'playing' || !!processingRef.current} />
                 <AnimatePresence>
