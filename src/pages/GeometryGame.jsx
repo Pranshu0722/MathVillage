@@ -264,18 +264,18 @@ export default function GeometryGame() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 sm:w-auto">
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Score</p>
-              <p className="text-base font-black tabular-nums text-slate-900">{score}</p>
+          <div className="flex gap-2">
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2">
+              <p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Score</p>
+              <p className="text-sm font-black tabular-nums text-slate-900 sm:text-base">{score}</p>
             </div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Integrity</p>
-              <p className="text-base font-black tabular-nums text-emerald-700">{hullIntegrity}%</p>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2">
+              <p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Integrity</p>
+              <p className="text-sm font-black tabular-nums text-emerald-700 sm:text-base">{hullIntegrity}%</p>
             </div>
-            <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Mission</p>
-              <p className="text-base font-black tabular-nums text-slate-900">{missionIndex + 1}/{missions.length}</p>
+            <div className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-center shadow-sm sm:px-3 sm:py-2">
+              <p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 sm:text-[10px]">Mission</p>
+              <p className="text-sm font-black tabular-nums text-slate-900 sm:text-base">{missionIndex + 1}/{missions.length}</p>
             </div>
           </div>
         </header>
