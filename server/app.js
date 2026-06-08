@@ -100,13 +100,29 @@ export function createApp() {
     }
   };
 
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validateSignup({ name, email, password }) {
+    if (!name || typeof name !== 'string' || name.trim().length < 1 || name.trim().length > 100)
+      return 'Name must be between 1 and 100 characters.';
+    if (!email || !EMAIL_RE.test(email))
+      return 'A valid email address is required.';
+    if (!password || password.length < 6)
+      return 'Password must be at least 6 characters.';
+    if (password.length > 128)
+      return 'Password must be at most 128 characters.';
+    return null;
+  }
+
   // Routes
   app.post('/api/auth/signup', authLimiter, async (req, res) => {
     try {
       const { name, email, password, role, grade, avatar } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 8);
+      const validationError = validateSignup({ name, email, password });
+      if (validationError) return res.status(400).send({ error: validationError });
 
-      const user = new User({ name, email, password: hashedPassword, role, grade, avatar });
+      const hashedPassword = await bcrypt.hash(password, 8);
+      const user = new User({ name: name.trim(), email: email.toLowerCase().trim(), password: hashedPassword, role, grade, avatar });
       await user.save();
 
       const progress = new Progress({ userId: user._id });
@@ -122,7 +138,10 @@ export function createApp() {
   app.post('/api/auth/login', authLimiter, async (req, res) => {
     try {
       const { email, password } = req.body;
-      const user = await User.findOne({ email });
+      if (!email || !EMAIL_RE.test(email) || !password)
+        return res.status(400).send({ error: 'Valid email and password are required.' });
+
+      const user = await User.findOne({ email: email.toLowerCase().trim() });
       if (!user || !(await bcrypt.compare(password, user.password))) {
         throw new Error('Invalid login credentials');
       }
