@@ -3,7 +3,16 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
+import rateLimit from 'express-rate-limit';
 import { User, Progress } from './models.js';
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { error: 'Too many attempts, please try again after 15 minutes.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Game ID to display name mapping for enriching history entries
 const GAME_ID_TO_NAME = {
@@ -92,7 +101,7 @@ export function createApp() {
   };
 
   // Routes
-  app.post('/api/auth/signup', async (req, res) => {
+  app.post('/api/auth/signup', authLimiter, async (req, res) => {
     try {
       const { name, email, password, role, grade, avatar } = req.body;
       const hashedPassword = await bcrypt.hash(password, 8);
@@ -110,7 +119,7 @@ export function createApp() {
     }
   });
 
-  app.post('/api/auth/login', async (req, res) => {
+  app.post('/api/auth/login', authLimiter, async (req, res) => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
@@ -124,7 +133,7 @@ export function createApp() {
     }
   });
 
-  app.post('/api/auth/google', async (req, res) => {
+  app.post('/api/auth/google', authLimiter, async (req, res) => {
     try {
       const { credential, role } = req.body;
 
