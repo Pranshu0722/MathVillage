@@ -38,6 +38,8 @@ import DecimalMall from './pages/DecimalMall';
 import CoordinateTreasure from './pages/CoordinateTreasure';
 import IntegerMountain from './pages/IntegerMountain';
 import AlgebraDungeon from './pages/AlgebraDungeon';
+import FractionSlicer from './pages/FractionSlicer';
+import NumberSortRush from './pages/NumberSortRush';
 
 function GameRoute({ children }) {
   return <div className="game-route-surface">{children}</div>;
@@ -145,6 +147,9 @@ function App() {
           <Route path="/games/coordinate-treasure" element={<ProtectedRoute><GameRoute><CoordinateTreasure /></GameRoute></ProtectedRoute>} />
           <Route path="/games/integer-mountain" element={<ProtectedRoute><GameRoute><IntegerMountain /></GameRoute></ProtectedRoute>} />
           <Route path="/games/algebra-dungeon" element={<ProtectedRoute><GameRoute><AlgebraDungeon /></GameRoute></ProtectedRoute>} />
+
+          <Route path="/games/fraction-slicer" element={<ProtectedRoute><GameRoute><FractionSlicer /></GameRoute></ProtectedRoute>} />
+          <Route path="/games/number-sort-rush" element={<ProtectedRoute><GameRoute><NumberSortRush /></GameRoute></ProtectedRoute>} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

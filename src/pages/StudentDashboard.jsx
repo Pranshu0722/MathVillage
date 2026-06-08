@@ -43,7 +43,7 @@ const GRADE_ZONES = [
     gradient: 'linear-gradient(135deg, #7c2d12 0%, #9a3412 50%, #431407 100%)',
     glow: '#f97316', accent: '#fb923c', textColor: '#fed7aa',
     scenery: '🛒🏪🌶️🥭🍎',
-    games: buildGames(['meteor', 'fractions', 'farm-multiply', 'math-racing'], 2),
+    games: buildGames(['meteor', 'fractions', 'farm-multiply', 'math-racing', 'fraction-slicer'], 2),
   },
   {
     grade: 4, label: 'Grade 4', emoji: '🌊', title: 'River Crossing',
@@ -51,7 +51,7 @@ const GRADE_ZONES = [
     gradient: 'linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #1e3a8a 100%)',
     glow: '#38bdf8', accent: '#7dd3fc', textColor: '#bae6fd',
     scenery: '🌊🐟🚤⛵🌴',
-    games: buildGames(['decimal-mall', 'fraction-ninja', 'patterns'], 3),
+    games: buildGames(['decimal-mall', 'fraction-ninja', 'patterns', 'number-sort-rush'], 3),
   },
   {
     grade: 5, label: 'Grade 5', emoji: '🌲', title: 'Forest Camp',
