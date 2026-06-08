@@ -7,5 +7,6 @@ export default defineConfig({
     environment: 'node',
     setupFiles: ['./src/test/setup.js', './src/test/setupDom.js'],
     include: ['src/**/*.test.{js,jsx}'],
+    pool: 'threads',
   },
 });
