@@ -428,7 +428,7 @@ export default function ArithmeticGame() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,202,66,0.22),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(94,218,208,0.18),transparent_30%)]" />
             <div className="relative">
               <div className="text-xs font-black uppercase tracking-[0.26em] text-white/45">Solve this</div>
-              <div className={`mt-4 text-6xl sm:text-7xl font-black tracking-tight transition-colors ${highlight && feedback === 'correct' ? 'text-emerald-300' : highlight && feedback === 'wrong' ? 'text-rose-300' : 'text-white'}`}>
+              <div className={`mt-4 text-5xl sm:text-6xl font-black tracking-tight transition-colors ${highlight && feedback === 'correct' ? 'text-emerald-300' : highlight && feedback === 'wrong' ? 'text-rose-300' : 'text-white'}`}>
                 {round.prompt}
               </div>
               <p className="mt-4 max-w-md text-white/70 text-sm leading-6">{round.skill}</p>

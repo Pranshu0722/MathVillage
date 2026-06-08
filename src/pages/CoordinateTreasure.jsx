@@ -85,7 +85,7 @@ export default function CoordinateTreasure() {
                         key={x}
                         whileTap={{scale:0.85}}
                         onClick={()=>handleClick(x,y)}
-                        className={`w-9 h-9 m-0.5 rounded-lg border text-sm transition-all ${
+                        className={`w-11 h-11 m-1 rounded-lg border text-sm transition-all ${
                           isTreasure&&selected?'bg-yellow-500/60 border-yellow-400 text-yellow-200':
                           isSelected?'bg-red-500/40 border-red-400':'bg-white/5 border-white/10 hover:border-primary/50 hover:bg-primary/10'
                         }`}>
