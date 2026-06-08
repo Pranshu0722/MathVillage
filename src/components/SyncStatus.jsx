@@ -1,7 +1,8 @@
 import { useSyncStore } from '../store/useSyncStore';
 import { usePlayerStore } from '../store/usePlayerStore';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { flushPendingSyncWrites } from '../lib/db';
+import { processSyncQueue } from '../lib/syncEngine';
 import { useEffect, useRef, useState } from 'react';
 
 const CFG = {
@@ -19,6 +20,8 @@ export default function SyncStatus() {
   const prevXP = useRef(xp);
   const prevScore = useRef(score);
   const [dirty, setDirty] = useState(false);
+  const [toast, setToast] = useState(null);
+  const toastTimer = useRef(null);
 
   useEffect(() => {
     if (xp !== prevXP.current || score !== prevScore.current) {
@@ -32,16 +35,43 @@ export default function SyncStatus() {
     if (status === 'synced') setDirty(false);
   }, [status]);
 
+  useEffect(() => {
+    if (status === 'error' || status === 'partial') {
+      const msg = status === 'error'
+        ? 'Sync failed. Your progress is saved locally — tap to retry.'
+        : 'Some progress failed to sync. Tap to retry.';
+      setToast(msg);
+      clearTimeout(toastTimer.current);
+      toastTimer.current = setTimeout(() => setToast(null), 5000);
+    } else {
+      setToast(null);
+    }
+    return () => clearTimeout(toastTimer.current);
+  }, [status]);
+
   const handleClick = async () => {
     await flushPendingSyncWrites();
-    sessionStorage.setItem('mv_sync_after_reload', '1');
-    window.location.reload();
+    processSyncQueue(setStatus);
   };
 
   const key = dirty && status === 'synced' ? 'syncnow' : status;
   const c = CFG[key] || CFG.synced;
 
   return (
+    <>
+    <AnimatePresence>
+      {toast && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-red-600 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-lg flex items-center gap-2"
+        >
+          <span>{toast}</span>
+          <button onClick={() => setToast(null)} className="ml-1 text-white/70 hover:text-white">✕</button>
+        </motion.div>
+      )}
+    </AnimatePresence>
     <motion.button
       onClick={handleClick}
       whileTap={{ scale: 0.94 }}
@@ -70,5 +100,6 @@ export default function SyncStatus() {
         </span>
       )}
     </motion.button>
+    </>
   );
 }
