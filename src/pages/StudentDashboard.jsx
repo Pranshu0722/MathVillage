@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
+import { ALL_GAMES } from '../lib/gameConstants';
 import { bootstrapFromServer } from '../lib/sessionHydrate';
 import DailyMissions from '../components/DailyMissions';
 import FairLeaderboard from '../components/FairLeaderboard';
@@ -16,23 +17,6 @@ import AdaptiveDifficulty from '../components/AdaptiveDifficulty';
 import BadgeDisplay from '../components/BadgeDisplay';
 import LevelUpModal from '../components/LevelUpModal';
 
-const ALL_GAMES = [
-  { id: 'arithmetic', name: 'Number Ninja', emoji: '🎯', xp: 50, path: '/games/arithmetic' },
-  { id: 'number-catcher', name: 'Number Catcher', emoji: '🥥', xp: 40, path: '/games/number-catcher' },
-  { id: 'balloon-pop', name: 'Balloon Pop', emoji: '🎈', xp: 45, path: '/games/balloon-pop' },
-  { id: 'geometry', name: 'Shape Explorer', emoji: '📐', xp: 60, path: '/games/geometry' },
-  { id: 'meteor', name: 'Multiplication Meteor', emoji: '☄️', xp: 75, path: '/games/meteor' },
-  { id: 'fractions', name: 'Fraction Frenzy', emoji: '🍕', xp: 50, path: '/games/fractions' },
-  { id: 'farm-multiply', name: 'Multiplication Farm', emoji: '🌻', xp: 65, path: '/games/farm-multiply' },
-  { id: 'math-racing', name: 'Math Racing', emoji: '🐂', xp: 70, path: '/games/math-racing' },
-  { id: 'balancer', name: 'Equation Balancer', emoji: '⚖️', xp: 75, path: '/games/balancer' },
-  { id: 'decimal-mall', name: 'Decimal Mall', emoji: '🛒', xp: 80, path: '/games/decimal-mall' },
-  { id: 'fraction-ninja', name: 'Fraction Ninja', emoji: '🥷', xp: 85, path: '/games/fraction-ninja' },
-  { id: 'patterns', name: 'Pattern Puzzle', emoji: '🧩', xp: 80, path: '/games/patterns' },
-  { id: 'coordinate-treasure', name: 'Treasure Map', emoji: '🗺️', xp: 90, path: '/games/coordinate-treasure' },
-  { id: 'integer-mountain', name: 'Integer Mountain', emoji: '🏔️', xp: 100, path: '/games/integer-mountain' },
-  { id: 'algebra-dungeon', name: 'Algebra Dungeon', emoji: '🗝️', xp: 110, path: '/games/algebra-dungeon' }
-];
 
 const GAMES_BY_ID = ALL_GAMES.reduce((acc, game) => {
   acc[game.id] = game;
