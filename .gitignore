@@ -1,0 +1,47 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Claude Code worktrees / local settings
+.claude/
+
+# Python (synthetic data + evaluation harness)
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/synthetic/
+data/dkt_sequences.npz
+*.parquet
+*.npz
+# but DO track a tiny committed sample dataset for smoke verification
+!data/sample/
+!data/sample/*.parquet
+!data/sample/*.npz
+
+# Env files / secrets — root .env and server/.env (one .env lives in the repo root)
+.env
+
+# Seeded test-account credentials (contains passwords — never commit)
+seed-students-credentials.md

@@ -1,0 +1,403 @@
+A Project Report on
+Gamified Learning Platform for Rural Education
+for the course IS65 - MAJOR PROJECT WORK
+Submitted in partial fulfillment of the requirements for the award of the degree of
+Bachelor of Engineering in Information Science and Engineering
+By:
+Pranshu Agarwal 1MS22IS154
+Riya Kumari 1MS22IS110
+Nagashree NS 1MS22IS083
+Mohammed Faizan K 1MS23IS407
+Under the Guidance of:
+Dr. Krishnaraj P.M
+M S RAMAIAH INSTITUTE OF TECHNOLOGY
+(Autonomous Institute, A ffiliated to VTU)
+BANGALORE-560054
+www.msrit.edu
+2025-2026
+Contents
+1 INTRODUCTION 1
+1.1 Motivation and Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+1.1.1 Motivation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+1.1.2 Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+1.2 Issues and Challenges . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+1.3 Problem Statement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+1.4 Proposed Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2 LITERATURE REVIEW 8
+2.1 Digital Learning in Rural Education . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.2 Gamification in Mathematics Learning . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.3 Student Engagement Techniques . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.4 Mobile-Based Learning Systems . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.5 Learning Analytics and Teacher Dashboards . . . . . . . . . . . . . . . . . . . . . . 10
+2.6 Accessibility in Low-Resource Environments . . . . . . . . . . . . . . . . . . . . . 10
+2.7 Limitations of Existing Systems . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+2.8 Research Gaps and Motivation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+2.8.1 Research Gaps . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+2.8.2 Motivation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+References 13
+Chapter 1
+INTRODUCTION
+Mathematics is a fundamental subject that plays an essential role in developing logical reasoning,
+analytical thinking, and problem-solving skills. However, for many students, especially those in
+rural and under-resourced areas, learning mathematics often becomes a challenging and discouraging
+experience. Traditional teaching methods primarily rely on textbooks and theoretical explanations,
+which may not e ffectively convey abstract mathematical concepts. As a result, students frequently
+struggle to understand the practical relevance of what they learn, leading to a lack of interest and
+confidence in the subject.
+One of the major reasons behind this issue is the limited availability of quality educational
+resources in rural regions. Many schools do not have access to advanced teaching tools, trained
+educators, or digital platforms that can enhance the learning experience. While modern educational
+technologies and applications exist, most of them require a stable internet connection or involve paid
+subscriptions. This creates a significant barrier for students in low-connectivity areas, preventing
+them from benefiting from such tools. Consequently, there exists a clear gap between urban and
+rural education systems, particularly in subjects like mathematics that require conceptual clarity and
+interactive learning.
+In recent years, gamification has emerged as an e ffective approach to improve student engagement
+and learning outcomes. Gamification refers to the use of game elements such as points, levels,
+rewards, and challenges in non-game contexts like education. By transforming learning into an
+interactive and enjoyable activity, gamification helps students stay motivated and actively participate
+in the learning process. Instead of passively reading or memorizing formulas, students can explore
+concepts through visual simulations, puzzles, and problem-solving games. This approach not only
+makes learning more engaging but also enhances retention and understanding.
+The proposed project, “Gamified Learning Platform for Rural Education,” aims to address these
+1
+challenges by developing an accessible and interactive platform specifically designed for mathematics
+learning. The core idea of this project is to convert important mathematical topics into small, intuitive
+mini-games that allow students to learn by doing. Each game is designed to visually represent
+mathematical concepts, making them easier to grasp even without extensive theoretical explanation.
+This approach is particularly beneficial for students who find traditional learning methods di fficult or
+uninteresting.
+A key feature of this platform is its o ffline capability. The system is implemented using
+Progressive Web App (PWA) technology, which allows the application to function even without
+continuous internet access. Once the application is loaded, users can access learning content, play
+games, and track progress without requiring an active network connection. This makes the platform
+highly suitable for rural areas where internet availability is limited or inconsistent. Additionally, the
+lightweight design ensures that the application can run smoothly on low-end smartphones, making it
+widely accessible.
+Another important aspect of the project is the inclusion of a teacher dashboard. This feature
+enables educators to monitor student performance, identify areas where students are struggling, and
+provide targeted support. By analyzing data such as quiz scores, game performance, and topic-wise
+progress, teachers can gain meaningful insights into each student’s learning pattern. This helps in
+creating a more personalized learning experience, which is often missing in conventional classroom
+settings.
+Furthermore, the platform is designed to be scalable and adaptable. While the current implemen-
+tation focuses on mathematics, the same framework can be extended to include other subjects in the
+future. The system also supports the integration of multiple languages, allowing students to learn in
+their preferred language, thereby improving comprehension and inclusivity.
+1.1 Motivation and Scope
+1.1.1 Motivation
+Mathematics is a subject that forms the foundation for many fields such as science, engineering,
+and technology. Despite its importance, a large number of students struggle with understanding
+mathematical concepts, especially when learning is limited to textbooks and theoretical explanations.
+This problem becomes more significant in rural areas, where students often do not have access to
+experienced teachers, interactive learning tools, or supportive academic environments. As a result,
+mathematics is often perceived as a di fficult and uninteresting subject, leading to low confidence and
+Department of ISE Ramaiah Institute of Technology 2
+poor academic performance.
+Another major factor contributing to this issue is the lack of accessibility to modern digital
+learning platforms. While many educational applications and tools have been developed in recent
+years, most of them require continuous internet connectivity or involve subscription-based models.
+For students in rural or low-resource settings, these requirements act as barriers, preventing them
+from benefiting from such advancements. In addition, many existing platforms are designed without
+considering the limitations of low-end devices, making them less e ffective in real-world rural
+scenarios.
+The need for a more engaging and accessible learning approach has led to the exploration of
+gamification in education. Gamification introduces elements such as rewards, levels, challenges,
+and instant feedback into the learning process. These elements help in maintaining student interest
+and encouraging active participation. Instead of passively consuming information, students become
+involved in the learning process through interaction and exploration. This approach not only improves
+engagement but also enhances understanding and retention of concepts.
+The motivation behind this project is to design a solution that combines the benefits of
+gamification with accessibility and simplicity. The goal is to create a platform that transforms
+mathematics learning into an enjoyable experience, where students can learn by interacting with
+concepts rather than memorizing them. By focusing on o ffline functionality and lightweight design,
+the project aims to ensure that the platform can be used e ffectively in rural environments without
+technological constraints. Ultimately, the motivation is to reduce the fear associated with mathematics
+and help students develop a positive attitude towards learning.
+1.1.2 Scope
+The scope of this project is centered on developing a gamified learning platform specifically for
+mathematics education, with a focus on rural and low-connectivity environments. The system is
+designed to provide an interactive and user-friendly learning experience that can be accessed on basic
+smartphones without requiring continuous internet connectivity.
+The platform includes a collection of mini-games, each targeting a specific mathematical concept.
+These games are designed to simplify complex topics by presenting them in a visual and interactive
+manner. In addition to games, the system provides topic-wise quizzes that help in evaluating the
+student’s understanding and reinforcing learned concepts. A reward system is integrated into the
+platform, where students earn points, badges, or levels based on their performance. This helps in
+maintaining motivation and encourages continuous learning.
+Department of ISE Ramaiah Institute of Technology 3
+Another important component within the scope of this project is the teacher dashboard. This
+feature allows educators to monitor student progress, analyze performance data, and identify areas
+where students may require additional support. By providing insights into learning patterns, the
+dashboard helps teachers make informed decisions and adopt more e ffective teaching strategies.
+From a technical perspective, the system is implemented using Progressive Web App (PWA)
+technology, enabling o ffline access after the initial load. This ensures that students can continue
+learning even in the absence of internet connectivity. The platform is designed to be lightweight and
+compatible with low-end devices, making it suitable for widespread use in rural areas.
+While the current scope is limited to mathematics education, the system is designed with
+scalability in mind. In the future, it can be extended to include additional subjects, more advanced
+gamification techniques, multilingual support, and personalized learning features. This flexibility
+ensures that the platform can evolve based on user needs and technological advancements.
+1.2 Issues and Challenges
+Despite the growing availability of digital learning tools and technologies, several challenges continue
+to hinder e ffective mathematics education, especially in rural and low-resource environments. These
+challenges arise from both educational and technological limitations, making it di fficult to deliver a
+consistent and engaging learning experience.
+One of the primary issues is the di fficulty in understanding abstract mathematical concepts.
+Mathematics often involves symbolic representations and logical reasoning that can be hard to
+visualize. Traditional teaching methods rely heavily on textbooks and lectures, which do not
+always provide intuitive explanations. Without proper visualization or practical examples, students
+tend to memorize formulas without truly understanding the underlying concepts, leading to weak
+foundations.
+Another significant challenge is low student engagement. Conventional classroom approaches
+are mostly passive, where students listen and take notes rather than actively participate. This lack of
+interaction reduces interest and motivation, causing students to lose focus and develop a negative
+perception of the subject. Over time, this can result in anxiety and avoidance of mathematics
+altogether.
+Limited access to the internet is also a major barrier in rural areas. Many modern educational
+platforms depend on continuous internet connectivity to deliver content, track progress, and provide
+feedback. However, in many regions, internet access is either unreliable or unavailable. This makes
+it difficult for students to consistently use online learning tools, thereby restricting their exposure to
+Department of ISE Ramaiah Institute of Technology 4
+advanced educational resources.
+In addition to connectivity issues, there is a lack of personalized learning systems. Most existing
+platforms provide the same content and di fficulty level to all users, without considering individual
+learning pace or ability. Students who grasp concepts quickly may feel unchallenged, while others
+may struggle to keep up. This one-size-fits-all approach reduces the e ffectiveness of learning and does
+not cater to diverse student needs.
+Another important challenge is the absence of proper monitoring and feedback mechanisms for
+teachers. In traditional settings, teachers often rely on periodic tests to evaluate student performance.
+This does not provide real-time insights into how well students are understanding each topic. Without
+detailed analytics, it becomes di fficult for teachers to identify weak areas and provide targeted support.
+Furthermore, device limitations pose a practical constraint. Many students in rural areas use low-
+end smartphones with limited processing power, storage, and battery life. Applications that are heavy,
+complex, or require frequent updates may not function properly on such devices. Therefore, designing
+a system that is lightweight and e fficient becomes a critical challenge.
+Lastly, language and usability barriers can also impact learning. Many educational platforms are
+designed with a generic audience in mind and may not support regional languages or simple user
+interfaces. This can make it di fficult for students to navigate the system or fully understand the
+content, especially for younger learners.
+These issues highlight the need for a solution that is not only technically e fficient but also
+educationally e ffective. Addressing these challenges requires a balanced approach that combines
+accessibility, engagement, simplicity, and adaptability to create a meaningful learning experience for
+students.
+1.3 Problem Statement
+Mathematics education in rural and low-resource environments is constrained by multiple academic
+and infrastructural limitations. Conventional teaching methodologies predominantly rely on theo-
+retical instruction and rote memorization, which are insu fficient for developing conceptual clarity
+in abstract mathematical topics. This results in poor comprehension, low retention, and reduced
+student confidence. Furthermore, the limited availability of qualified educators, interactive teaching
+aids, and digital learning resources in rural institutions exacerbates the problem. Although various
+e-learning platforms exist, most are dependent on continuous internet connectivity and subscription-
+based models, making them inaccessible to a significant portion of the target population.
+In addition to accessibility issues, existing systems lack e ffective engagement mechanisms
+Department of ISE Ramaiah Institute of Technology 5
+and adaptive learning capabilities. The absence of interactive content leads to low student
+motivation and minimal active participation. Moreover, most platforms do not incorporate real-time
+performance analytics, limiting the ability of educators to monitor progress and provide targeted
+interventions. Device constraints, such as low-end smartphones, further restrict the usability of
+resource-intensive applications. Therefore, there is a need for a lightweight, o ffline-capable, and
+gamified learning system that enhances engagement, supports conceptual understanding, and enables
+efficient performance tracking, particularly tailored for rural educational contexts.
+1.4 Proposed Model
+The proposed system is a Gamified Learning Platform for Mathematics, designed to improve student
+engagement and conceptual understanding, particularly for learners in rural and resource-constrained
+environments. The model follows a game-based learning approach, where mathematical concepts
+are represented through interactive mini-games and quizzes. This enables students to actively engage
+with concepts through visualization and problem-solving, rather than relying solely on theoretical
+instruction. The system is implemented as a mobile application, ensuring ease of access and usability
+on commonly available smartphones.
+The architecture of the proposed model is structured into three primary layers: frontend, backend,
+and data layer. The frontend is developed using React Native with Expo, providing a responsive and
+user-friendly mobile interface. It includes a student module that allows users to access various games,
+attempt quizzes, and track their progress through a reward-based system incorporating points, levels,
+and achievements. Additionally, a teacher dashboard is integrated into the system to provide insights
+into student performance, enabling educators to monitor progress, identify learning gaps, and o ffer
+targeted guidance.
+The backend is implemented using Node.js and Express.js, which handle API communication,
+business logic, and data processing. The system uses a PostgreSQL database for structured data
+storage, ensuring reliability and scalability. Data interactions are managed through an ORM to
+maintain type safety and validation. The gamification layer is embedded within the application
+logic, providing real-time feedback, scoring mechanisms, and structured progression to enhance user
+engagement.
+The model is designed with a focus on performance and compatibility, ensuring smooth operation
+on low to mid-range mobile devices. The modular architecture allows for future scalability, including
+the addition of new subjects, advanced analytics, and personalized learning features. Overall, the
+proposed system integrates gamification, mobile accessibility, and data-driven insights to create an
+Department of ISE Ramaiah Institute of Technology 6
+effective and engaging mathematics learning platform.
+In addition to core functionalities, the system emphasizes maintainability and extensibility
+through a well-structured and modular codebase. The use of modern development practices such as
+component-based architecture in the frontend and middleware-based routing in the backend ensures
+easier updates and feature integration. Validation mechanisms and structured API design contribute
+to system reliability and data consistency. This approach not only improves development e fficiency
+but also enables the platform to evolve over time by incorporating new learning modules, enhanced
+gamification strategies, and improved analytics without major architectural changes.
+Department of ISE Ramaiah Institute of Technology 7
+Chapter 2
+LITERATURE REVIEW
+The integration of digital technologies in education has significantly transformed the way mathematics
+is taught and learned. Various approaches such as gamification, mobile learning, teacher dashboards,
+and offline-capable systems have been explored to enhance student engagement and improve
+conceptual understanding. This chapter reviews existing research relevant to these approaches,
+particularly in the context of rural and low-resource environments.
+2.1 Digital Learning in Rural Education
+Digital learning technologies have significantly influenced modern education, particularly in improv-
+ing access to learning resources. In rural environments, where traditional infrastructure is limited,
+digital platforms o ffer flexibility and scalability. A study by Gqoli [8] highlighted that students in
+rural higher education generally have a positive perception of digital tools due to their ability to
+enhance engagement and accessibility. However, challenges such as limited internet connectivity,
+lack of digital literacy, and insu fficient infrastructure continue to restrict their e ffective adoption.
+Further research on inclusive education by Lin [9] emphasized that students with learning
+disabilities face additional barriers in mathematics education. The study suggests that technology-
+enabled learning systems can support such students by providing adaptive and accessible learning
+environments. Despite these benefits, the lack of large-scale validation and infrastructural constraints
+remains a limitation in rural implementations.
+2.2 Gamification in Mathematics Learning
+Gamification has emerged as a powerful approach to improve student engagement and motivation
+in mathematics education. Pechenkina et al. [1] demonstrated that integrating gamified elements
+8
+such as rewards, points, and leaderboards in mobile applications can significantly enhance student
+participation and academic performance. The study also reported improved retention rates among
+students using gamified learning tools.
+A comprehensive review by Nah et al. [4] concluded that gamification not only increases
+motivation but also improves conceptual understanding through immediate feedback and interactive
+learning. However, contrasting findings were reported in a study conducted at Eastern Samar State
+University [11], where gamification did not result in significant improvement in test scores. This
+indicates that the e ffectiveness of gamification depends on its design, implementation, and alignment
+with learning objectives.
+2.3 Student Engagement Techniques
+Student engagement plays a critical role in e ffective learning outcomes, especially in subjects like
+mathematics that require continuous practice and conceptual clarity. Traditional teaching methods
+often fail to actively involve students, leading to reduced motivation and interest. Gamification and
+interactive learning strategies have been identified as e ffective techniques to address this issue.
+Research by Hamari et al. [14] suggests that game-based elements such as challenges, feedback,
+and rewards significantly improve user engagement and participation. Similarly, Deterding et al. [12]
+defined gamification as the application of game design elements in non-game contexts, emphasizing
+its role in enhancing user experience and motivation. These approaches encourage active participation
+and help students develop a deeper understanding of concepts through experiential learning.
+2.4 Mobile-Based Learning Systems
+Mobile learning has gained widespread adoption due to the increasing availability of smartphones.
+Mobile-based applications provide flexibility and allow students to learn anytime and anywhere.
+Poc ¸an et al. [3] demonstrated that mobile learning systems significantly improve both academic
+performance and student motivation in mathematics education.
+However, the e ffectiveness of mobile learning systems depends on device capabilities and
+application design. In rural areas, students often use low-end devices, which may not support
+resource-intensive applications. Therefore, designing lightweight and e fficient mobile applications
+becomes essential to ensure accessibility and usability.
+Department of ISE Ramaiah Institute of Technology 9
+2.5 Learning Analytics and Teacher Dashboards
+Learning analytics systems and teacher dashboards play an important role in monitoring student
+performance and enabling personalized learning. A study in ZDM Mathematics Education [7] showed
+that integrating teacher dashboards with student learning environments provides valuable insights into
+student understanding and supports timely interventions.
+Prieto [6] analyzed various dashboard designs and found that simple and intuitive interfaces are
+more effective in helping teachers identify student weaknesses. Features such as progress tracking,
+performance visualization, and topic-wise analysis enhance decision-making and improve teaching
+strategies. However, the e ffectiveness of such systems depends on the digital literacy of educators.
+2.6 Accessibility in Low-Resource Environments
+Accessibility remains a major challenge in rural education systems. Many existing platforms rely
+heavily on internet connectivity, which is often unreliable or unavailable in rural areas. Van der Linde
+[5] highlighted that o ffline-capable systems significantly improve usability and reduce dependency on
+network availability.
+Similarly, Adi et al. [2] demonstrated that systems designed with o ffline capabilities and e fficient
+data usage provide better accessibility in low-resource environments. These systems ensure that
+students can continue learning without interruptions, making them more suitable for rural deployment.
+2.7 Limitations of Existing Systems
+Despite advancements in educational technology, several limitations persist in existing systems. Many
+platforms focus primarily on content delivery rather than interactive learning, resulting in low student
+engagement. Additionally, the lack of personalization in most systems prevents them from addressing
+individual learning needs e ffectively.
+Furthermore, dependency on continuous internet connectivity, high system requirements, and
+limited teacher support tools restrict the usability of existing solutions in rural environments. Studies
+have also shown that gamification alone does not guarantee improved learning outcomes unless it is
+properly integrated with pedagogical principles [11].
+Department of ISE Ramaiah Institute of Technology 10
+2.8 Research Gaps and Motivation
+2.8.1 Research Gaps
+The review of existing literature reveals that significant progress has been made in integrating digital
+technologies and gamification into mathematics education. However, several critical gaps still exist,
+particularly in the context of rural and low-resource environments.
+One of the major gaps is the lack of integrated solutions that combine gamification, accessibility,
+and performance analytics into a single system. Most studies focus on individual aspects such as
+gamification [1,4] or learning analytics [6,7], but very few systems e ffectively bring these components
+together. As a result, existing platforms fail to provide a holistic learning experience that addresses
+both engagement and learning outcomes simultaneously.
+Another important limitation is the dependency on internet connectivity. Many modern educa-
+tional applications require continuous online access, which restricts their usability in rural areas
+with unstable or limited network infrastructure [5]. Although some studies have explored o ffline-
+capable systems [2], these solutions often lack advanced features such as gamification or real-time
+performance tracking.
+The lack of personalization and adaptive learning mechanisms is also a key research gap. Most
+existing platforms provide uniform content and di fficulty levels for all students, without considering
+individual learning pace, strengths, or weaknesses. This one-size-fits-all approach reduces the
+effectiveness of learning.
+Additionally, there is a limited focus on teacher-centric tools in many systems. While some
+research highlights the importance of dashboards and analytics [6], these features are often not fully
+integrated into student learning platforms. This creates a gap between student activity and teacher
+intervention.
+Another gap lies in the usability and device compatibility of existing solutions. Many applications
+are designed for high-end devices and assume the availability of su fficient computational resources.
+However, in rural settings, students often rely on low-end smartphones, which limits the usability of
+such systems.
+Furthermore, existing studies often focus on short-term engagement rather than long-term learning
+outcomes. While gamification improves motivation, its impact on sustained conceptual understanding
+is still not fully established [11].
+Department of ISE Ramaiah Institute of Technology 11
+2.8.2 Motivation
+The identified research gaps provide strong motivation for developing a more comprehensive
+and practical learning solution. The primary motivation of this project is to design a platform
+that addresses the limitations of existing systems while being suitable for deployment in rural
+environments.
+One of the key motivations is to enhance student engagement through gamification while
+maintaining educational e ffectiveness. By integrating game-based elements with structured learning
+content, the system encourages active participation and improves conceptual understanding.
+Another important motivation is to ensure accessibility and usability in low-resource environ-
+ments. The system is designed as a lightweight mobile application that can run e fficiently on low to
+mid-range devices, making it suitable for widespread adoption.
+The project is also motivated by the need to provide actionable insights for teachers. By
+incorporating performance tracking and analytics, the system enables educators to monitor student
+progress and provide targeted support.
+Additionally, the system aims to support scalability and extensibility, allowing the platform to
+expand to other subjects and incorporate advanced features in the future.
+Overall, the motivation is to develop a system that e ffectively balances engagement, accessibility,
+and learning outcomes, thereby improving mathematics education for students in rural and under-
+served communities.
+Department of ISE Ramaiah Institute of Technology 12
+References
+[1] E. Pechenkina, D. Laurence, G. Oates, D. Eldridge, and D. Hunter, “Using a gamified mobile app
+to increase student engagement, retention and academic achievement,” International Journal of
+Educational Technology in Higher Education , vol. 14, no. 31, 2017.
+[2] L. Adi, R. J. Akbar, and W. N. Khotimah, “Platform e-Learning untuk Pembelajaran
+Pemrograman Web Menggunakan Konsep Progressive Web Apps,” Jurnal Teknik ITS , vol. 6,
+no. 2, 2018.
+[3] S. Poc ¸an, B. Altay, and C. Yas ¸aro ˘glu, “The E ffects of Mobile Technology on Learning
+Performance and Motivation in Mathematics Education,” Education and Information
+Technologies , vol. 28, pp. 683–712, 2022.
+[4] F. F.-H. Nah, Q. Zeng, V . Telaprolu, B. Ayyappa, and M. Eschenbrenner, “Gamification of
+Education: A Review of Literature,” Computers in Human Behavior , 2020.
+[5] M. Van der Linde, “Designing O ffline-First Mobile Apps for Rural Education,” Mobile
+Computing and Applications Journal , 2021.
+[6] L. P. Prieto, “Teacher Dashboards for Learning Analytics: A Review of Design Principles,”
+British Journal of Educational Technology , 2019.
+[7] ZDM Mathematics Education, “Connecting a Teacher Dashboard to a Student Digital
+Collaborative Environment,” 2021.
+[8] Gqoli, “Digital Technologies for Mathematics Learning in Rural Higher Education: Students’
+Perspectives,” Research in Social Sciences and Technology , 2024.
+[9] T. H. Lin, “Inclusive Education in Rural Settings: Leveraging Technology for Math Learning,”
+SAGE Publications , 2025.
+[10] P. Ester et al., “Impact of Gamification on Mathematical Competence in Students with
+Intellectual Disabilities,” European Journal of Special Needs Education , 2025.
+13
+[11] Eastern Samar State University, “Math Class Gamified! E ffects on Mathematics Performance of
+COED Students,” Indian Journal of Science and Technology , 2021.
+[12] E. Deterding, S. Dixon, R. Khaled, and L. Nacke, “From Game Design Elements to
+Gamefulness: Defining Gamification,” Proceedings of the 15th International Academic
+MindTrek Conference , 2011.
+[13] K. Werbach and D. Hunter, “For the Win: How Game Thinking Can Revolutionize Your
+Business,” Wharton Digital Press, 2012.
+[14] J. Hamari, J. Koivisto, and H. Sarsa, “Does Gamification Work? A Literature Review of
+Empirical Studies on Gamification,” 47th Hawaii International Conference on System Sciences ,
+2014.
+[15] UNESCO, “ICT in Education for Rural Development,” UNESCO Report , 2020.
+Department of ISE Ramaiah Institute of Technology 14
