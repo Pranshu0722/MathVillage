@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Clock3, Trophy, Zap, Target, Sparkles, CheckCircle2, XCircle } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
@@ -254,7 +254,7 @@ export default function ArithmeticGame() {
     );
   }
 
-  if (phase === ‘intro’) {
+  if (phase === 'intro') {
     return (
       <GameStartScreen
         title="Number Ninja"
@@ -262,9 +262,9 @@ export default function ArithmeticGame() {
         category="Arithmetic"
         description="A structured session that mixes addition, subtraction, multiplication, and division. Build streaks for bonus XP — accuracy matters more than speed."
         stats={[
-          { label: ‘Rounds’, value: roundLimit },
-          { label: ‘Style’, value: ‘Adaptive’ },
-          { label: ‘Grade’, value: grade },
+          { label: 'Rounds', value: roundLimit },
+          { label: 'Style', value: 'Adaptive' },
+          { label: 'Grade', value: grade },
         ]}
         gradient="linear-gradient(135deg, #FFCA42, #FF7052)"
         onStart={startSession}
