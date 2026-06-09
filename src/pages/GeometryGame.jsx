@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import GameStartScreen from '../components/GameStartScreen';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, RotateCcw, Sailboat, ShieldCheck, Target, XCircle } from 'lucide-react';
 import { useGamification } from '../hooks/useGamification';
@@ -170,6 +171,7 @@ export default function GeometryGame() {
   const navigate = useNavigate();
 
   const missions = useMemo(() => MISSIONS.filter((mission) => grade >= mission.minGrade).slice(0, grade >= 5 ? 5 : 4), [grade]);
+  const [started, setStarted] = useState(false);
   const [missionIndex, setMissionIndex] = useState(0);
   const [selectedIds, setSelectedIds] = useState([]);
   const [correctIds, setCorrectIds] = useState([]);
@@ -246,6 +248,46 @@ export default function GeometryGame() {
     setMissionIndex((current) => current + 1);
     resetRound();
   };
+
+  function ShipPreview() {
+    return (
+      <div className="flex flex-col items-center gap-3 select-none w-full">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <svg viewBox="0 0 200 120" className="w-full max-w-[260px]">
+          <rect width="200" height="120" rx="8" fill="#e0f2fe" />
+          <path d="M0 90 C40 80 80 96 120 86 C160 76 180 88 200 92 L200 120 L0 120 Z" fill="#0891b2" opacity="0.7" />
+          <line x1="100" y1="20" x2="100" y2="76" stroke="#334155" strokeWidth="3" />
+          <polygon points="102,22 102,68 148,68" fill="white" stroke="#334155" strokeWidth="1.5" />
+          <polygon points="104,16 140,26 104,36" fill="white" stroke="#334155" strokeWidth="1.5" />
+          <rect x="70" y="68" width="60" height="14" rx="2" fill="white" stroke="#334155" strokeWidth="1.5" />
+          <polygon points="48,78 148,78 136,98 60,98" fill="white" stroke="#334155" strokeWidth="1.5" />
+          <circle cx="78" cy="88" r="6" fill="white" stroke="#334155" strokeWidth="1.5" />
+          <circle cx="114" cy="88" r="6" fill="white" stroke="#334155" strokeWidth="1.5" />
+        </svg>
+        <p className="text-sm text-slate-400 font-medium">Find shapes on the ship!</p>
+      </div>
+    );
+  }
+
+  if (!started) {
+    return (
+      <GameStartScreen
+        title="Geometry Shipyard"
+        emoji="⛵"
+        category="Geometry"
+        description="A ship built from geometric shapes appears. Each mission asks you to find specific shapes — all triangles, circles, or quadrilaterals. Complete all missions to launch!"
+        stats={[
+          { label: 'Missions', value: missions.length },
+          { label: 'Skill', value: 'Geometry' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #0891b2, #22d3ee)"
+        onStart={() => setStarted(true)}
+      >
+        <ShipPreview />
+      </GameStartScreen>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f4f7fb] px-3 py-4 text-slate-900 sm:px-5 lg:px-8">

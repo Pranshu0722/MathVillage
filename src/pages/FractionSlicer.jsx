@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, RotateCcw, Scissors, Sparkles } from 'lucide-react';
+import GameStartScreen from '../components/GameStartScreen';
 import { useGamification } from '../hooks/useGamification';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
@@ -193,6 +194,56 @@ export default function FractionSlicer() {
   const timerPct = (timer / 20) * 100;
   const timerColor = timer > 10 ? 'bg-violet-500' : timer > 5 ? 'bg-amber-500' : 'bg-rose-500';
 
+  function SlicerPreview() {
+    const denom = 4;
+    const shaded = new Set([0, 1]);
+    const cx = 100, cy = 100, r = 86, crustR = 95;
+    const slices = Array.from({ length: denom }, (_, i) => {
+      const a1 = (i * 360 / denom - 90) * Math.PI / 180;
+      const a2 = ((i + 1) * 360 / denom - 90) * Math.PI / 180;
+      const x1 = (cx + r * Math.cos(a1)).toFixed(2);
+      const y1 = (cy + r * Math.sin(a1)).toFixed(2);
+      const x2 = (cx + r * Math.cos(a2)).toFixed(2);
+      const y2 = (cy + r * Math.sin(a2)).toFixed(2);
+      const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z`;
+      return { d, shaded: shaded.has(i) };
+    });
+    return (
+      <div className="flex flex-col items-center gap-3 select-none">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <svg viewBox="0 0 200 200" className="w-32 h-32">
+          <circle cx={cx} cy={cy} r={crustR} fill="#d97706" />
+          {slices.map((s, i) => (
+            <path key={i} d={s.d} stroke="#b45309" strokeWidth="2" fill={s.shaded ? '#f97316' : '#fef9c3'} />
+          ))}
+          <circle cx={cx} cy={cy} r={crustR} fill="none" stroke="#92400e" strokeWidth="3" />
+        </svg>
+        <div className="text-2xl font-black text-violet-700">Shade 2/4</div>
+        <p className="text-sm text-slate-400 font-medium">Click slices then press Check!</p>
+      </div>
+    );
+  }
+
+  if (status === 'ready') {
+    return (
+      <GameStartScreen
+        title="Fraction Slicer"
+        emoji="🍕"
+        category="Fractions"
+        description="A pizza divided into equal slices appears. Click to shade the correct fraction of slices, then press Check. You have 20 seconds per round — 3 mistakes ends the game!"
+        stats={[
+          { label: 'Rounds', value: totalRounds },
+          { label: 'Timer', value: '20s' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #7c3aed, #a78bfa)"
+        onStart={() => { setStatus('playing'); setFeedback('Click pizza slices to shade the correct fraction, then press Check.'); }}
+      >
+        <SlicerPreview />
+      </GameStartScreen>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f5f0ff] px-3 py-4 text-slate-900 sm:px-5">
       <div className="mx-auto max-w-lg">
@@ -320,23 +371,6 @@ export default function FractionSlicer() {
         )}
       </div>
 
-      {status === 'ready' && (
-        <div className="fixed inset-0 z-20 grid place-items-center bg-black/40 px-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-xl">
-            <div className="mb-3 text-5xl">🍕</div>
-            <h2 className="font-display text-3xl font-black text-slate-950">Fraction Slicer</h2>
-            <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
-              A pizza divided into equal slices appears. Click to shade the right fraction, then press <strong>Check</strong>. You have 20 seconds!
-            </p>
-            <button
-              onClick={() => { setStatus('playing'); setFeedback('Click pizza slices to shade the correct fraction, then press Check.'); }}
-              className="mt-6 w-full rounded-xl bg-violet-600 py-3 text-sm font-bold text-white hover:bg-violet-700"
-            >
-              Start Slicing!
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, Layers, RotateCcw, Sparkles } from 'lucide-react';
+import GameStartScreen from '../components/GameStartScreen';
 import { useGamification } from '../hooks/useGamification';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
@@ -241,6 +242,52 @@ export default function NumberSortRush() {
   const unsortedCount = round.items.filter(n => !n.sorted).length;
   const hasSelected = !!selected && status === 'playing';
 
+  function SortPreview() {
+    return (
+      <div className="flex flex-col items-center gap-3 select-none w-full">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="grid grid-cols-4 gap-2 w-full">
+          {[4, 7, 12, 9].map((n, i) => (
+            <div key={i} className="rounded-xl border-2 border-slate-200 bg-white py-3 text-center text-xl font-black text-slate-800">
+              {n}
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-2 w-full mt-1">
+          <div className="rounded-xl border-2 border-indigo-200 bg-indigo-50 p-3 text-center">
+            <p className="font-black text-indigo-700 text-sm">Even</p>
+            <p className="text-xs text-indigo-500 mt-1">← Sort here</p>
+          </div>
+          <div className="rounded-xl border-2 border-rose-200 bg-rose-50 p-3 text-center">
+            <p className="font-black text-rose-700 text-sm">Odd</p>
+            <p className="text-xs text-rose-500 mt-1">← Sort here</p>
+          </div>
+        </div>
+        <p className="text-sm text-slate-400 font-medium">Sort numbers into the right bucket!</p>
+      </div>
+    );
+  }
+
+  if (status === 'ready') {
+    return (
+      <GameStartScreen
+        title="Number Sort Rush"
+        emoji="🗂️"
+        category="Number Sense"
+        description="Click a number to select it, then drop it into the correct bucket. You have 45 seconds per round — sort them all before time runs out!"
+        stats={[
+          { label: 'Rounds', value: TOTAL_ROUNDS },
+          { label: 'Time', value: `${ROUND_TIME}s` },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #059669, #10b981)"
+        onStart={() => { setStatus('playing'); setFeedback('Click a number to select it, then click the correct bucket.'); }}
+      >
+        <SortPreview />
+      </GameStartScreen>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f0fdf4] px-3 py-4 text-slate-900 sm:px-5">
       <div className="mx-auto max-w-2xl">
@@ -394,23 +441,6 @@ export default function NumberSortRush() {
         )}
       </div>
 
-      {status === 'ready' && (
-        <div className="fixed inset-0 z-20 grid place-items-center bg-black/40 px-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-xl">
-            <div className="mb-3 text-5xl">🗂️</div>
-            <h2 className="font-display text-3xl font-black text-slate-950">Number Sort Rush</h2>
-            <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
-              Click a number to select it, then drop it into the correct bucket. You have <strong>{ROUND_TIME} seconds</strong> per round — sort them all before time runs out!
-            </p>
-            <button
-              onClick={() => { setStatus('playing'); setFeedback('Click a number to select it, then click the correct bucket.'); }}
-              className="mt-6 w-full rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white hover:bg-emerald-700"
-            >
-              Start Sorting!
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

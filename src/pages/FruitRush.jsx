@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 
 function genQ(grade) {
   const fruits = ['🍎','🍌','🍊','🥭','🍇'];
@@ -14,6 +15,27 @@ function genQ(grade) {
   return { a, b, answer: a+b, fruitA: fruits[Math.floor(Math.random()*fruits.length)], fruitB: fruits[Math.floor(Math.random()*fruits.length)] };
 }
 
+function FruitPreview() {
+  return (
+    <div className="flex flex-col items-center gap-4 text-center select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="flex items-center gap-5">
+        <div className="text-center">
+          <div className="text-5xl">🍎</div>
+          <div className="font-black text-3xl text-yellow-500 mt-1">7</div>
+        </div>
+        <div className="text-3xl font-black text-slate-400">+</div>
+        <div className="text-center">
+          <div className="text-5xl">🍌</div>
+          <div className="font-black text-3xl text-yellow-500 mt-1">5</div>
+        </div>
+      </div>
+      <div className="mt-2 rounded-xl bg-slate-100 px-6 py-2 text-lg font-black text-slate-700">= ?</div>
+      <p className="text-sm text-slate-400 font-medium">Type your total to score!</p>
+    </div>
+  );
+}
+
 export default function FruitRush() {
   const { user } = useAuthStore();
   const grade = normalizeGrade(user?.grade);
@@ -22,7 +44,7 @@ export default function FruitRush() {
   const [input,setInput]=useState('');
   const [score,setScore]=useState(0);
   const [timeLeft,setTimeLeft]=useState(baseTime);
-  const [gameState,setGameState]=useState('playing');
+  const [gameState,setGameState]=useState('start');
   const [feedback,setFeedback]=useState(null);
   const [combo,setCombo]=useState(0);
   const {addXP}=usePlayerStore();
@@ -34,7 +56,7 @@ export default function FruitRush() {
     const t=setInterval(()=>setTimeLeft(t=>{if(t<=1){setGameState('lost');return 0;}return t-1;}),1000);
     return()=>clearInterval(t);
   },[gameState]);
-  useEffect(()=>{if(gameState!=='playing')addXP(Math.floor(score/2),'Fruit Rush',score,Math.min(100,score),'Arithmetic');},[gameState]);
+  useEffect(()=>{if(gameState==='lost')addXP(Math.floor(score/2),'Fruit Rush',score,Math.min(100,score),'Arithmetic');},[gameState]);
 
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -49,6 +71,26 @@ export default function FruitRush() {
     setInput('');
     setTimeout(()=>{setFeedback(null);setQ(genQ(grade));},500);
   };
+
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Fruit Rush"
+        emoji="🍎"
+        category="Arithmetic"
+        description="Two fruit quantities appear — add them up fast! Build combos with consecutive correct answers to earn bonus points. Keep going until time runs out!"
+        stats={[
+          { label: 'Time', value: `${baseTime}s` },
+          { label: 'Bonus', value: 'Combo ×' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #f97316, #fb923c)"
+        onStart={() => setGameState('playing')}
+      >
+        <FruitPreview />
+      </GameStartScreen>
+    );
+  }
 
   return(
     <div className="min-h-screen flex flex-col items-center p-4">

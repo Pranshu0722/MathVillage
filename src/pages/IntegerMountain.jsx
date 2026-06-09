@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import GameStartScreen from '../components/GameStartScreen';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Flag, MapPinned, Mountain, RotateCcw, ShieldCheck, Sigma, Wind } from 'lucide-react';
 import { usePlayerStore } from '../store/usePlayerStore';
@@ -226,7 +227,7 @@ export default function IntegerMountain() {
   const [score, setScore] = useState(0);
   const [rescues, setRescues] = useState(0);
   const [mistakes, setMistakes] = useState(0);
-  const [gameState, setGameState] = useState('playing');
+  const [gameState, setGameState] = useState('prestart');
   const [feedback, setFeedback] = useState('Use operation cards to move on the integer elevation map.');
 
   const mission = missions[missionIndex];
@@ -263,6 +264,27 @@ export default function IntegerMountain() {
     setGameState('playing');
     startMission(0);
   };
+
+  function MountainPreview() {
+    return (
+      <div className="flex flex-col items-center gap-3 select-none w-full">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="w-full rounded-xl border border-slate-200 bg-white p-3 text-sm font-bold">
+          {[3, 2, 1, 0, -1, -2].map((n) => (
+            <div key={n} className="flex h-7 items-center gap-2 border-b border-slate-100 last:border-0">
+              <span className={`w-8 text-right text-xs font-black tabular-nums ${n > 0 ? 'text-emerald-700' : n === 0 ? 'text-slate-900' : 'text-blue-700'}`}>
+                {n > 0 ? `+${n}` : n}
+              </span>
+              <div className="flex-1 h-px bg-slate-200" />
+              {n === 2 && <span className="text-base">🧗</span>}
+              {n === -1 && <span className="text-[10px] font-black text-cyan-700 bg-cyan-50 px-2 rounded">Target</span>}
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-slate-400 font-medium">Navigate the integer number line!</p>
+      </div>
+    );
+  }
 
   const finishGame = () => {
     const accuracy = Math.max(0, Math.round((rescues / Math.max(1, rescues + mistakes)) * 100));
@@ -361,6 +383,26 @@ export default function IntegerMountain() {
   };
 
   const accuracy = Math.max(0, Math.round((rescues / Math.max(1, rescues + mistakes)) * 100));
+
+  if (gameState === 'prestart') {
+    return (
+      <GameStartScreen
+        title="Integer Mountain Rescue"
+        emoji="🧗"
+        category="Integers"
+        description="Solve equation beacons to unlock move cards, then navigate the integer number line to reach target altitudes. Avoid danger zones and complete all missions!"
+        stats={[
+          { label: 'Missions', value: missions.length },
+          { label: 'Skill', value: 'Integers' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #1e293b, #334155)"
+        onStart={() => setGameState('playing')}
+      >
+        <MountainPreview />
+      </GameStartScreen>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f5f7fb] px-3 py-4 text-slate-900 sm:px-5 lg:px-8">
