@@ -9,13 +9,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'Math Village — Gamified Learning',
-        short_name: 'Math Village',
-        description: 'An offline-first gamified mathematics learning platform for rural students (Grades 2–6).',
-        theme_color: '#f97316',
-        background_color: '#0f172a',
+        name: 'MathVillage',
+        short_name: 'MathVillage',
+        description: 'A gamified mathematics learning platform for students in Grades 1–6.',
+        theme_color: '#FF7052',
+        background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait-primary',
         start_url: '/',
@@ -24,19 +24,24 @@ export default defineConfig({
         categories: ['education', 'games'],
         icons: [
           {
-            src: '/vite.svg',
+            src: '/icon-192.png',
             sizes: '192x192',
-            type: 'image/svg+xml',
-            purpose: 'any maskable'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
-            src: '/vite.svg',
+            src: '/icon-512.png',
             sizes: '512x512',
-            type: 'image/svg+xml',
-            purpose: 'any maskable'
+            type: 'image/png',
+            purpose: 'any'
+          },
+          {
+            src: '/icon-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ],
-        screenshots: [],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
