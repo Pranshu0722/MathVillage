@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Clock3, Trophy, Zap, Target, Sparkles, CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
+import { ChevronLeft, Clock3, Trophy, Zap, Target, Sparkles, CheckCircle2, XCircle } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
 import { useGamification } from '../hooks/useGamification';
 import { getNextDifficulty } from '../engine/engineAPI';
 import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
+import GameStartScreen from '../components/GameStartScreen';
 
 const SKILL = skillForGame('ArithmeticGame'); // 'addition'
 
@@ -253,86 +254,34 @@ export default function ArithmeticGame() {
     );
   }
 
-  if (phase === 'intro') {
-    return (
-      <div className="max-w-6xl mx-auto px-3 md:px-6 py-4">
-        <div className="flex items-center justify-between mb-5">
-          <Link to="/student" className="inline-flex items-center gap-2 rounded-2xl bg-white border border-slate-200 px-3 py-2 font-bold text-slate-800 shadow-sm">
-            <ChevronLeft size={18} /> Back
-          </Link>
-          <div className="rounded-full bg-slate-900 text-white px-3 py-2 text-xs font-black uppercase tracking-[0.22em]">
-            Grade {grade}
-          </div>
+  if (phase === ‘intro’) {
+    const NinjaPreview = () => (
+      <div className="flex flex-col items-center gap-4 select-none">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="rounded-[28px] bg-slate-950 text-white p-6 w-full max-w-[240px]">
+          <p className="text-xs font-black uppercase tracking-widest text-white/40 mb-3">Question style</p>
+          <div className="text-4xl font-black">{round.prompt}</div>
+          <p className="mt-3 text-white/60 text-sm leading-5">{round.skill}</p>
         </div>
-
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-5">
-          <section className="relative overflow-hidden rounded-[32px] bg-white border border-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] p-6 sm:p-8">
-            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#FFCA42] via-[#FF7052] to-[#5EDAD0]" />
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#FFF7ED] px-3 py-1 text-xs font-black uppercase tracking-[0.24em] text-[#C2410C]">
-              <Sparkles size={14} /> Adaptive practice
-            </div>
-            <h1 className="mt-4 text-4xl sm:text-5xl font-black text-slate-950 leading-[1.05]">
-              Number Ninja
-            </h1>
-            <p className="mt-4 max-w-2xl text-[15px] sm:text-base leading-7 text-slate-600">
-              A structured math session that feels like a real learning experience: mixed skills, clear feedback, and a clean reward model that values accuracy, consistency, and focus.
-            </p>
-
-            <div className="mt-7 grid sm:grid-cols-3 gap-3">
-              <StatCard label="Rounds" value={roundLimit} sublabel="Short, focused practice" icon={<Target size={18} />} />
-              <StatCard label="Loop" value="Adaptive" sublabel="Alternates skills intelligently" icon={<Zap size={18} />} />
-              <StatCard label="Reward" value="XP" sublabel="Earn based on quality" icon={<Trophy size={18} />} />
-            </div>
-
-            <div className="mt-7 rounded-[28px] border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
-              <div className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.22em] text-slate-400">
-                <Clock3 size={16} /> What you’ll do
-              </div>
-              <div className="mt-4 grid gap-3">
-                {[
-                  'Answer one question at a time with immediate feedback.',
-                  'Build streaks to unlock stronger end-of-session rewards.',
-                  'Practice addition, subtraction, multiplication, and division in a balanced sequence.',
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-2xl bg-white border border-slate-100 p-4 shadow-sm">
-                    <div className="mt-0.5 h-6 w-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-black">✓</div>
-                    <p className="text-sm leading-6 text-slate-600">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button
-              onClick={startSession}
-              className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#FFCA42] to-[#FF7052] px-5 py-3.5 font-black text-white shadow-[0_14px_28px_rgba(255,112,82,0.24)] transition-transform hover:scale-[1.01] active:scale-[0.99]"
-            >
-              Start Session <ArrowRight size={18} />
-            </button>
-          </section>
-
-          <aside className="rounded-[32px] bg-slate-950 text-white shadow-[0_18px_50px_rgba(15,23,42,0.18)] p-6 sm:p-8">
-            <div className="text-xs font-black uppercase tracking-[0.26em] text-white/50">Preview</div>
-            <div className="mt-4 rounded-[28px] border border-white/10 bg-white/5 p-5">
-              <div className="text-sm font-black uppercase tracking-[0.24em] text-white/40">Question style</div>
-              <div className="mt-4 text-5xl font-black tracking-tight">{round.prompt}</div>
-              <p className="mt-4 text-white/70 text-sm leading-6">{round.skill}</p>
-            </div>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              {[
-                { label: 'Mixed skills', value: 'Yes' },
-                { label: 'Age-aware', value: `Grade ${grade}` },
-                { label: 'Session size', value: `${roundLimit} rounds` },
-                { label: 'Focus', value: 'Accuracy first' },
-              ].map((item) => (
-                <div key={item.label} className="rounded-3xl bg-white/5 border border-white/10 p-4">
-                  <div className="text-[10px] uppercase tracking-[0.24em] text-white/45 font-black">{item.label}</div>
-                  <div className="mt-2 text-lg font-black">{item.value}</div>
-                </div>
-              ))}
-            </div>
-          </aside>
-        </div>
+        <p className="text-sm text-slate-400 font-medium">One question at a time</p>
       </div>
+    );
+    return (
+      <GameStartScreen
+        title="Number Ninja"
+        emoji="🥷"
+        category="Arithmetic"
+        description="A structured session that mixes addition, subtraction, multiplication, and division. Build streaks for bonus XP — accuracy matters more than speed."
+        stats={[
+          { label: ‘Rounds’, value: roundLimit },
+          { label: ‘Style’, value: ‘Adaptive’ },
+          { label: ‘Grade’, value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #FFCA42, #FF7052)"
+        onStart={startSession}
+      >
+        <NinjaPreview />
+      </GameStartScreen>
     );
   }
 
