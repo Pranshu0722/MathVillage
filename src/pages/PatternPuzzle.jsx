@@ -410,7 +410,7 @@ export default function PatternPuzzle() {
           </section>
         ) : (
           <div className="grid gap-4 lg:grid-cols-[1fr_330px]">
-            <section className="relative space-y-4">
+            <section className="space-y-4">
               <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <div>
