@@ -358,49 +358,56 @@ export default function MultiplicationMeteor() {
       <div className="mx-auto max-w-6xl">
 
         {/* Header */}
-        <header className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-3">
-            <Link
-              to="/student"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-colors hover:bg-white/10"
-              aria-label="Back to dashboard"
-            >
-              <ArrowLeft size={18} />
-            </Link>
-            <div>
-              <div className="flex items-center gap-2">
-                <Rocket size={20} className="text-[#5EDAD0]" />
-                <h1 className="text-xl font-black tracking-tight">Multiplication Meteor</h1>
-                <span className="rounded-full border border-[#5EDAD0]/30 bg-[#5EDAD0]/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-[#5EDAD0]">
-                  Grade {grade}
-                </span>
-              </div>
-              <p className="mt-0.5 text-xs font-semibold text-slate-400">
-                Type the product on any falling object and press Enter
-              </p>
-            </div>
-          </div>
+        <header className="mb-4 relative overflow-hidden rounded-2xl border border-white/8 bg-[#0a1628] px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+          {/* gradient top strip */}
+          <div className="absolute inset-x-0 top-0 h-[3px] rounded-t-2xl bg-gradient-to-r from-[#FF7052] via-[#FFCA42] to-[#5EDAD0]" />
 
-          {/* HUD chips */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex flex-col items-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 min-w-[64px]">
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Score</span>
-              <span className="text-lg font-black tabular-nums text-white">{score}</span>
-            </div>
-            <div className="flex flex-col items-center rounded-xl border border-[#5EDAD0]/20 bg-[#5EDAD0]/10 px-4 py-2 min-w-[64px]">
-              <span className="text-[9px] font-black uppercase tracking-widest text-[#5EDAD0]/70">Hits</span>
-              <span className="text-lg font-black tabular-nums text-[#5EDAD0]">{hits}<span className="text-xs text-[#5EDAD0]/50">/{difficulty.limit}</span></span>
-            </div>
-            <div className={`flex flex-col items-center rounded-xl border px-4 py-2 min-w-[64px] ${misses >= 2 ? 'border-[#FF7052]/40 bg-[#FF7052]/10' : 'border-white/10 bg-white/5'}`}>
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Lives</span>
-              <LivesDisplay misses={misses} />
-            </div>
-            {combo >= 2 && (
-              <div className="flex flex-col items-center rounded-xl border border-[#FFCA42]/30 bg-[#FFCA42]/10 px-4 py-2 min-w-[64px] animate-pulse">
-                <span className="text-[9px] font-black uppercase tracking-widest text-[#FFCA42]/70">Combo</span>
-                <span className="text-lg font-black tabular-nums text-[#FFCA42]">{combo}×</span>
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-center gap-3">
+              <Link
+                to="/student"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label="Back to dashboard"
+              >
+                <ArrowLeft size={17} />
+              </Link>
+              <div>
+                <div className="flex items-center gap-2">
+                  <Rocket size={18} className="text-[#FF7052]" />
+                  <h1 className="text-xl font-black tracking-tight bg-gradient-to-r from-[#FF7052] to-[#FFCA42] bg-clip-text text-transparent">
+                    Multiplication Meteor
+                  </h1>
+                  <span className="rounded-full border border-[#FFCA42]/30 bg-[#FFCA42]/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-[#FFCA42]">
+                    Grade {grade}
+                  </span>
+                </div>
+                <p className="mt-0.5 text-xs font-semibold text-slate-500">
+                  Type the product on any falling object and press Enter
+                </p>
               </div>
-            )}
+            </div>
+
+            {/* HUD chips */}
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-col items-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 min-w-[64px]">
+                <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Score</span>
+                <span className="text-lg font-black tabular-nums text-white">{score}</span>
+              </div>
+              <div className="flex flex-col items-center rounded-xl border border-[#5EDAD0]/20 bg-[#5EDAD0]/10 px-4 py-2 min-w-[64px]">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#5EDAD0]/70">Hits</span>
+                <span className="text-lg font-black tabular-nums text-[#5EDAD0]">{hits}<span className="text-xs text-[#5EDAD0]/50">/{difficulty.limit}</span></span>
+              </div>
+              <div className={`flex flex-col items-center rounded-xl border px-4 py-2 min-w-[64px] ${misses >= 2 ? 'border-[#FF7052]/40 bg-[#FF7052]/10' : 'border-white/10 bg-white/5'}`}>
+                <span className="text-[9px] font-black uppercase tracking-widest text-slate-500">Lives</span>
+                <LivesDisplay misses={misses} />
+              </div>
+              {combo >= 2 && (
+                <div className="flex flex-col items-center rounded-xl border border-[#FFCA42]/30 bg-[#FFCA42]/10 px-4 py-2 min-w-[64px] animate-pulse">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-[#FFCA42]/70">Combo</span>
+                  <span className="text-lg font-black tabular-nums text-[#FFCA42]">{combo}×</span>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
