@@ -1,6 +1,6 @@
 # MathVillage
 
-**An offline-first, gamified mathematics learning PWA for rural education (Grades 1–6), with an on-device Adaptive Learning Engine and an Express/MongoDB backend for cross-device sync and teacher analytics.**
+**An offline-first, gamified mathematics learning PWA for rural education (Grades 2–6), with an on-device Adaptive Learning Engine and an Express/MongoDB backend for cross-device sync and teacher analytics.**
 
 MathVillage delivers 20 math mini-games as an installable Progressive Web App that works fully offline on low-end Android devices. Layered on top is an **Adaptive Learning Engine** that personalizes difficulty per student, recommends what to learn next, schedules spaced-repetition reviews, and powers a fairer, mastery-aware leaderboard.
 
@@ -26,7 +26,7 @@ MathVillage delivers 20 math mini-games as an installable Progressive Web App th
 
 ## 1. Overview
 
-MathVillage is a Progressive Web App for teaching mathematics to rural students in Grades 1–6. It is **offline-first**: every game runs entirely in the browser with no network required, and progress is stored locally in IndexedDB. An optional backend adds cross-device sync and a teacher class-analytics view.
+MathVillage is a Progressive Web App for teaching mathematics to rural students in Grades 2–6. It is **offline-first**: every game runs entirely in the browser with no network required, and progress is stored locally in IndexedDB. An optional backend adds cross-device sync and a teacher class-analytics view.
 
 The headline feature is the **Adaptive Learning Engine** (`src/engine/`), a self-contained, UI-free module that closes the "uniform difficulty for everyone" personalization gap. It combines:
 
