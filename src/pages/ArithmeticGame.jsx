@@ -255,17 +255,6 @@ export default function ArithmeticGame() {
   }
 
   if (phase === ‘intro’) {
-    const NinjaPreview = () => (
-      <div className="flex flex-col items-center gap-4 select-none">
-        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
-        <div className="rounded-[28px] bg-slate-950 text-white p-6 w-full max-w-[240px]">
-          <p className="text-xs font-black uppercase tracking-widest text-white/40 mb-3">Question style</p>
-          <div className="text-4xl font-black">{round.prompt}</div>
-          <p className="mt-3 text-white/60 text-sm leading-5">{round.skill}</p>
-        </div>
-        <p className="text-sm text-slate-400 font-medium">One question at a time</p>
-      </div>
-    );
     return (
       <GameStartScreen
         title="Number Ninja"
@@ -280,7 +269,15 @@ export default function ArithmeticGame() {
         gradient="linear-gradient(135deg, #FFCA42, #FF7052)"
         onStart={startSession}
       >
-        <NinjaPreview />
+        <div className="flex flex-col items-center gap-4 select-none">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+          <div className="rounded-[28px] bg-slate-950 text-white p-6 w-full max-w-[240px]">
+            <p className="text-xs font-black uppercase tracking-widest text-white/40 mb-3">Question style</p>
+            <div className="text-4xl font-black">{round.prompt}</div>
+            <p className="mt-3 text-white/60 text-sm leading-5">{round.skill}</p>
+          </div>
+          <p className="text-sm text-slate-400 font-medium">One question at a time</p>
+        </div>
       </GameStartScreen>
     );
   }
