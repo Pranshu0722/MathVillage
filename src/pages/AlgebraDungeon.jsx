@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 
 function genQ(grade) {
   const xMax = grade <= 3 ? 6 : grade <= 5 ? 12 : 15;
@@ -12,12 +13,25 @@ function genQ(grade) {
   const x=Math.floor(Math.random()*xMax)+1;
   const a=Math.floor(Math.random()*aMax)+1;
   const b=Math.floor(Math.random()*bMax)+1;
-  // ax + b = c
   const c=a*x+b;
   return {a,b,c,x,equation:`${a}x + ${b} = ${c}`};
 }
 
 const DOOR_COLORS=['#818cf8','#f97316','#22c55e','#ec4899','#f59e0b'];
+
+function DungeonPreview() {
+  return (
+    <div className="flex flex-col items-center gap-4 select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="w-20 h-28 rounded-t-xl border-4 border-violet-400/60 bg-gradient-to-br from-violet-500/20 to-violet-900/20 flex items-center justify-center text-4xl shadow-lg">
+        🔒
+      </div>
+      <div className="text-2xl font-black text-slate-800">3x + 2 = 11</div>
+      <div className="rounded-xl bg-slate-100 px-5 py-2 text-base font-black text-slate-600">x = ?</div>
+      <p className="text-sm text-slate-400 font-medium">Solve for x to open the door!</p>
+    </div>
+  );
+}
 
 export default function AlgebraDungeon() {
   const { user } = useAuthStore();
@@ -27,7 +41,7 @@ export default function AlgebraDungeon() {
   const [input,setInput]=useState('');
   const [score,setScore]=useState(0);
   const [doorsOpened,setDoorsOpened]=useState(0);
-  const [gameState,setGameState]=useState('playing');
+  const [gameState,setGameState]=useState('start');
   const [feedback,setFeedback]=useState(null);
   const [animDoor,setAnimDoor]=useState(false);
   const {addXP}=usePlayerStore();
@@ -52,6 +66,26 @@ export default function AlgebraDungeon() {
 
   const color=DOOR_COLORS[doorsOpened%DOOR_COLORS.length];
 
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Algebra Dungeon"
+        emoji="🗝️"
+        category="Algebra"
+        description="Each door is locked by an algebra equation like 3x + 2 = 11. Solve for x and type the value — correct answers open the door. Clear the dungeon!"
+        stats={[
+          { label: 'Doors', value: TOTAL_DOORS },
+          { label: 'XP each', value: '25' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #8b5cf6, #a78bfa)"
+        onStart={() => setGameState('playing')}
+      >
+        <DungeonPreview />
+      </GameStartScreen>
+    );
+  }
+
   return(
     <div className="min-h-screen flex flex-col items-center p-4">
       <div className="w-full max-w-md mb-4 flex items-center justify-between">
@@ -66,7 +100,6 @@ export default function AlgebraDungeon() {
 
       {gameState==='playing'&&(
         <div className="w-full max-w-md">
-          {/* Dungeon door */}
           <div className="glass-panel p-8 text-center mb-5 relative overflow-hidden"
             style={{background:'linear-gradient(180deg,rgba(15,10,30,0.8) 0%,rgba(30,41,59,0.7) 100%)'}}>
             <div className="absolute inset-0 opacity-10 text-9xl flex items-center justify-center select-none">🏰</div>

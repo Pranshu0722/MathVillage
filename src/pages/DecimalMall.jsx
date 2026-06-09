@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
 
@@ -23,6 +24,24 @@ function genQ(grade) {
   return {numer,denom,decimal:(numer/denom).toFixed(precision),pct:Math.round((numer/denom)*100),precision};
 }
 
+function DecimalPreview() {
+  const filled = 3;
+  const total = 4;
+  return (
+    <div className="flex flex-col items-center gap-4 select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="text-5xl font-black text-indigo-600">3/4</div>
+      <div className="flex gap-1.5">
+        {Array.from({ length: total }).map((_, i) => (
+          <div key={i} className={`w-8 h-12 rounded-lg ${i < filled ? 'bg-indigo-500' : 'bg-slate-200'}`} />
+        ))}
+      </div>
+      <div className="rounded-xl bg-slate-100 px-6 py-2 text-lg font-black text-slate-700">= 0.??</div>
+      <p className="text-sm text-slate-400 font-medium">Convert fraction to decimal</p>
+    </div>
+  );
+}
+
 export default function DecimalMall() {
   const { user } = useAuthStore();
   const grade = normalizeGrade(user?.grade);
@@ -31,7 +50,7 @@ export default function DecimalMall() {
   const [input,setInput]=useState('');
   const [score,setScore]=useState(0);
   const [timeLeft,setTimeLeft]=useState(baseTime);
-  const [gameState,setGameState]=useState('playing');
+  const [gameState,setGameState]=useState('start');
   const [feedback,setFeedback]=useState(null);
   const [combo,setCombo]=useState(0);
   const {addXP}=usePlayerStore();
@@ -43,7 +62,7 @@ export default function DecimalMall() {
     const t=setInterval(()=>setTimeLeft(t=>{if(t<=1){setGameState('lost');return 0;}return t-1;}),1000);
     return()=>clearInterval(t);
   },[gameState]);
-  useEffect(()=>{if(gameState!=='playing')addXP(Math.floor(score/2),'Decimal Mall',score,Math.min(100,score),'Decimals');},[gameState]);
+  useEffect(()=>{if(gameState==='lost')addXP(Math.floor(score/2),'Decimal Mall',score,Math.min(100,score),'Decimals');},[gameState]);
 
   const PRICE=Math.floor(Math.random()*50)+10;
   const [itemPrice]=useState(PRICE);
@@ -68,6 +87,26 @@ export default function DecimalMall() {
 
   const sections=Math.min(q.denom,12);
   const filled=Math.round((q.numer/q.denom)*sections);
+
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Decimal Mall"
+        emoji="🛒"
+        category="Decimals"
+        description="A fraction appears — convert it to decimal form and type your answer. Build combos with consecutive correct answers for bonus points!"
+        stats={[
+          { label: 'Time', value: `${baseTime}s` },
+          { label: 'Bonus', value: 'Combo ×' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #6366f1, #818cf8)"
+        onStart={() => setGameState('playing')}
+      >
+        <DecimalPreview />
+      </GameStartScreen>
+    );
+  }
 
   return(
     <div className="min-h-screen flex flex-col items-center p-4">
