@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 
 function getNumbers(grade) {
   if (grade <= 2) return [1,2,3,4,5,6,7,8,9,10];
@@ -61,6 +62,28 @@ function getQuestion(grade) {
 
 const COCONUT_COLORS = ['#f59e0b', '#ef4444', '#8b5cf6', '#10b981', '#f97316'];
 
+function CatcherPreview() {
+  return (
+    <div className="flex flex-col items-center gap-4 select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="relative w-full max-w-[200px] h-28 bg-gradient-to-b from-green-900/20 to-slate-900/40 rounded-xl flex items-center justify-center">
+        <span className="absolute top-2 left-3 text-3xl opacity-30">🌴</span>
+        <span className="absolute top-2 right-3 text-3xl opacity-30">🌴</span>
+        <div className="text-4xl font-black text-yellow-400">7 + 5</div>
+        <div className="absolute bottom-3 text-2xl animate-bounce">🥥</div>
+      </div>
+      <div className="grid grid-cols-2 gap-2 w-full max-w-[200px]">
+        {[12, 10, 14, 13].map((n, i) => (
+          <div key={i} className="py-2 rounded-xl text-center font-black text-xl border-2 border-white/20 bg-white/5 text-white">
+            🧺 {n}
+          </div>
+        ))}
+      </div>
+      <p className="text-sm text-slate-400 font-medium">Tap the right basket!</p>
+    </div>
+  );
+}
+
 export default function NumberCatcher() {
   const { user } = useAuthStore();
   const grade = normalizeGrade(user?.grade);
@@ -69,8 +92,8 @@ export default function NumberCatcher() {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [timeLeft, setTimeLeft] = useState(baseTime);
-  const [gameState, setGameState] = useState('playing'); // 'playing' | 'won' | 'lost'
-  const [feedback, setFeedback] = useState(null); // { text, correct }
+  const [gameState, setGameState] = useState('start');
+  const [feedback, setFeedback] = useState(null);
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const { addXP } = usePlayerStore();
@@ -140,16 +163,34 @@ export default function NumberCatcher() {
     setQuestion(getQuestion(grade));
   };
 
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Number Catcher"
+        emoji="🥥"
+        category="Arithmetic"
+        description="A math problem drops from the coconut tree. Tap the basket that shows the correct answer. Build a combo for bonus points — 3 wrong answers ends the game!"
+        stats={[
+          { label: 'Lives', value: '❤️❤️❤️' },
+          { label: 'Time', value: `${baseTime}s` },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #f59e0b, #fbbf24)"
+        onStart={() => setGameState('playing')}
+      >
+        <CatcherPreview />
+      </GameStartScreen>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center p-4">
-      {/* Header */}
       <div className="w-full max-w-md mb-4 flex items-center justify-between">
         <Link to="/student" className="btn btn-glass btn-sm">← Back</Link>
         <h1 className="font-display text-xl font-bold text-gradient">🥥 Number Catcher</h1>
         <div className="badge badge-warning text-xs">Grade {grade}</div>
       </div>
 
-      {/* HUD */}
       <div className="w-full max-w-md glass-panel p-3 mb-6 flex items-center justify-between gap-3">
         <div className="flex items-center gap-1 text-red-400 font-bold">
           {'❤️'.repeat(lives)}{'🖤'.repeat(3 - lives)}
@@ -161,10 +202,8 @@ export default function NumberCatcher() {
         {streak >= 2 && <div className="hud-chip text-orange-400 text-sm">🔥 {streak}x</div>}
       </div>
 
-      {/* Game Area */}
       {gameState === 'playing' && (
         <div className="w-full max-w-md">
-          {/* Tree / coconut scene */}
           <motion.div
             className="glass-panel p-8 text-center mb-6 relative overflow-hidden"
             style={{ background: 'linear-gradient(180deg, rgba(20,83,45,0.4) 0%, rgba(30,41,59,0.7) 100%)' }}
@@ -184,7 +223,6 @@ export default function NumberCatcher() {
             <div className="text-5xl animate-bounce">🥥</div>
           </motion.div>
 
-          {/* Feedback */}
           <AnimatePresence>
             {feedback && (
               <motion.div
@@ -198,7 +236,6 @@ export default function NumberCatcher() {
             )}
           </AnimatePresence>
 
-          {/* Choice buttons */}
           <p className="text-slate-400 text-sm text-center mb-3">Tap the matching basket!</p>
           <div className="grid grid-cols-2 gap-3">
             {question.choices.map((n, i) => (
@@ -220,7 +257,6 @@ export default function NumberCatcher() {
         </div>
       )}
 
-      {/* End Screen */}
       {gameState !== 'playing' && (
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}

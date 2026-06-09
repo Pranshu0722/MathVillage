@@ -7,6 +7,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
 import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
+import GameStartScreen from '../components/GameStartScreen';
 
 const SKILL = skillForGame('MathMole');
 const HOLE_COUNT = 9;
@@ -222,6 +223,50 @@ export default function MathMole() {
   const timerPct = (timer / GAME_TIME) * 100;
   const timerColor = timer > 30 ? 'bg-emerald-500' : timer > 15 ? 'bg-amber-500' : 'bg-rose-500';
 
+  function MolePreview() {
+    const colors = ['#f97316', '#ef4444', '#22c55e', '#3b82f6', '#f97316', '#ef4444', '#22c55e', '#3b82f6', '#f97316'];
+    const nums = [7, null, 12, 3, 15, null, 8, 21, 5];
+    return (
+      <div className="flex flex-col items-center gap-3 select-none">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="grid grid-cols-3 gap-2">
+          {nums.map((n, i) => (
+            <div key={i} className="w-16 h-16 rounded-xl flex items-center justify-center font-black text-xl text-white shadow-md"
+              style={{ background: n !== null ? `radial-gradient(ellipse at 50% 75%, #3d1800, #0a0400)` : 'transparent', border: '3px solid #1a0800' }}>
+              {n !== null ? (
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center font-black text-white text-lg"
+                  style={{ background: colors[i], border: `2px solid ${colors[i]}` }}>
+                  {n}
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-slate-400 font-medium">Whack numbers that match the rule!</p>
+      </div>
+    );
+  }
+
+  if (status === 'ready') {
+    return (
+      <GameStartScreen
+        title="Math Mole"
+        emoji="🔨"
+        category="Arithmetic"
+        description="Numbers pop up from holes — whack the ones that match the rule, avoid the rest. Rules change every 10 correct hits. You have 60 seconds and 3 lives!"
+        stats={[
+          { label: 'Time', value: `${GAME_TIME}s` },
+          { label: 'Lives', value: '3' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #f59e0b, #d97706)"
+        onStart={() => setStatus('playing')}
+      >
+        <MolePreview />
+      </GameStartScreen>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f5f5e8] px-3 py-4 text-slate-900 sm:px-5">
       <div className="mx-auto max-w-lg">
@@ -325,24 +370,6 @@ export default function MathMole() {
         )}
       </div>
 
-      {status === 'ready' && (
-        <div className="fixed inset-0 z-20 grid place-items-center bg-black/40 px-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-xl">
-            <div className="mb-3 text-5xl">🔨</div>
-            <h2 className="font-display text-3xl font-black text-slate-950">Math Mole</h2>
-            <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
-              Numbers pop up from holes — <strong>whack the ones that match the rule</strong>, avoid the rest.
-              Rules change every 10 hits. You have <strong>{GAME_TIME} seconds</strong> and 3 lives.
-            </p>
-            <button
-              onClick={() => setStatus('playing')}
-              className="mt-6 w-full rounded-xl bg-amber-500 py-3 text-sm font-bold text-white hover:bg-amber-600"
-            >
-              Start Whacking!
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

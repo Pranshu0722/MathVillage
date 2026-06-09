@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Award, Crosshair, Flame, Rocket, RotateCcw, Shield } from 'lucide-react';
+import GameStartScreen from '../components/GameStartScreen';
 import { useGamification } from '../hooks/useGamification';
 import { useAuthStore } from '../store/useAuthStore';
 import { getGradeTier, normalizeGrade } from '../lib/gradeUtils';
@@ -253,6 +254,51 @@ export default function MultiplicationMeteor() {
     }, 260);
   };
 
+  function MeteorPreview() {
+    return (
+      <div className="flex flex-col items-center gap-4 select-none">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="relative h-40 w-full max-w-[260px] overflow-hidden rounded-xl bg-[#090f24] border border-white/10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),_transparent_34%)]" />
+          <div className="absolute left-[15%] top-[10%] flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[35%] border border-orange-200/50 bg-gradient-to-br from-orange-400 to-red-800 text-sm font-black text-white">
+            6 × 7
+          </div>
+          <div className="absolute left-[65%] top-[30%] flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-200/60 bg-gradient-to-br from-cyan-400 to-blue-700 text-sm font-black text-white">
+            4 × 9
+          </div>
+          <div className="absolute inset-x-0 bottom-0 h-12 border-t-2 border-cyan-300 bg-slate-950" />
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+            <div className="mx-auto h-8 w-4 rounded-t-full bg-slate-200" />
+            <div className="-mt-1 flex h-8 w-16 items-center justify-center rounded-t-2xl bg-slate-800">
+              <Crosshair className="text-cyan-300" size={14} />
+            </div>
+          </div>
+        </div>
+        <p className="text-sm text-slate-400 font-medium">Type the product to shoot it!</p>
+      </div>
+    );
+  }
+
+  if (gameState === 'idle') {
+    return (
+      <GameStartScreen
+        title="Multiplication Meteor"
+        emoji="🚀"
+        category="Multiplication"
+        description="Falling meteors and balloons carry multiplication problems. Type the product and press Enter to shoot them before they hit the floor. Three misses ends the mission!"
+        stats={[
+          { label: 'Misses', value: `${MAX_MISSES} max` },
+          { label: 'Hits', value: `${difficulty.limit}` },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #0e7490, #22d3ee)"
+        onStart={startGame}
+      >
+        <MeteorPreview />
+      </GameStartScreen>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#0b1022] px-3 py-4 text-white sm:px-5 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -288,20 +334,6 @@ export default function MultiplicationMeteor() {
               turretAngle={turretAngle}
             />
 
-            {gameState === 'idle' && (
-              <div className="absolute inset-0 grid place-items-center rounded-xl bg-slate-950/70 p-6 text-center backdrop-blur">
-                <div className="max-w-md">
-                  <Rocket size={58} className="mx-auto mb-4 text-cyan-300" />
-                  <h2 className="font-display text-4xl font-black">Defend The Station</h2>
-                  <p className="mt-3 text-sm font-semibold leading-relaxed text-slate-300">
-                    Falling meteors and balloons contain multiplication problems. Type the product and press Enter to shoot. Three missed objects ends the game.
-                  </p>
-                  <button onClick={startGame} className="mt-6 rounded-lg bg-cyan-400 px-6 py-3 text-sm font-black text-slate-950 transition-colors hover:bg-cyan-300">
-                    Start Defense
-                  </button>
-                </div>
-              </div>
-            )}
 
             {gameState === 'ended' && (
               <div className="absolute inset-0 grid place-items-center rounded-xl bg-slate-950/75 p-6 text-center backdrop-blur">

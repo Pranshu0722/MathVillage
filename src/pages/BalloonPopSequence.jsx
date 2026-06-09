@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { getGradeTier, normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 
 function genSequence(grade) {
   const tier = getGradeTier(grade);
@@ -64,6 +65,46 @@ export default function BalloonPopSequence() {
     }
     setTimeout(()=>{setFeedback(null);setSeq(genSequence(grade));},700);
   },[gameState,seq,combo]);
+  if (gameState === 'start') {
+    const BalloonPreview = () => (
+      <div className="flex flex-col items-center gap-4 select-none">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="flex gap-3">
+          {[3, 6, 9, '?', 15].map((v, i) => (
+            <motion.div key={i} animate={{ y: [0, -6, 0] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+              className="flex flex-col items-center">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center font-black text-lg text-white shadow-md"
+                style={{ background: `radial-gradient(circle at 35% 35%, ${BCOLORS[i % 5]}cc, ${BCOLORS[i % 5]})` }}>
+                {v}
+              </div>
+              <div className="w-0.5 h-3 bg-slate-400 mt-0.5" />
+            </motion.div>
+          ))}
+        </div>
+        <p className="text-slate-600 font-semibold text-sm">Step: +3 each balloon</p>
+        <p className="text-sm text-slate-400 font-medium">Pop the balloon with the missing number!</p>
+      </div>
+    );
+
+    return (
+      <GameStartScreen
+        title="Balloon Pop Sequence"
+        emoji="🎈"
+        category="Patterns"
+        description="Look at the number sequence on the balloons and find the missing number. Pop the correct balloon before time runs out — build a combo for bonus points!"
+        stats={[
+          { label: 'Time', value: `${baseTime}s` },
+          { label: 'Lives', value: '❤️❤️❤️' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #ef4444, #f97316)"
+        onStart={() => setGameState('playing')}
+      >
+        <BalloonPreview />
+      </GameStartScreen>
+    );
+  }
+
   return(
     <div className="min-h-screen flex flex-col items-center p-4">
       <div className="w-full max-w-lg mb-4 flex items-center justify-between">
@@ -71,20 +112,6 @@ export default function BalloonPopSequence() {
         <h1 className="font-display text-xl font-bold text-gradient text-slate-800">🎈 Balloon Pop</h1>
         <div className="badge badge-warning text-xs font-bold bg-yellow-100 text-yellow-800">Grade {grade}</div>
       </div>
-
-      {gameState==='start' && (
-        <motion.div initial={{scale:0.8}} animate={{scale:1}} className="bg-white rounded-[32px] p-8 text-center max-w-sm w-full mx-auto mt-10 shadow-lg bg-white border border-slate-100">
-          <div className="text-6xl mb-4">🎈</div>
-          <h2 className="font-display text-2xl font-bold mb-4 text-slate-800">How to Play</h2>
-          <div className="text-left text-slate-600 mb-6 space-y-3 bg-slate-50 p-5 rounded-xl shadow-inner text-sm font-medium">
-            <p>1️⃣ Look at the <strong>number sequence</strong> on the balloons.</p>
-            <p>2️⃣ Figure out the <strong>missing number</strong> that replaces the <strong className="text-primary text-base">?</strong> mark.</p>
-            <p>3️⃣ <strong>Pop the correct balloon</strong> from the choices below.</p>
-            <p>4️⃣ Answer quickly to build a <strong>combo</strong> for extra XP within 60s!</p>
-          </div>
-          <button onClick={()=>{setGameState('playing');}} className="btn btn-primary w-full text-lg py-4 shadow-lg mb-2">Start Game</button>
-        </motion.div>
-      )}
 
       {(gameState==='playing' || gameState==='lost') && (
         <div className="w-full max-w-lg bg-white rounded-[32px] p-3 mb-4 flex items-center justify-between bg-white shadow-sm border border-slate-100">

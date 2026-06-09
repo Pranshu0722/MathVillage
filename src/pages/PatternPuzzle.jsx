@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Grid3X3, RotateCcw, ShieldAlert, Sparkles, TimerReset } from 'lucide-react';
+import GameStartScreen from '../components/GameStartScreen';
 import { useGamification } from '../hooks/useGamification';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
@@ -312,6 +313,51 @@ export default function PatternPuzzle() {
 
   const accuracy = Math.max(0, Math.round((score / Math.max(1, score + mistakes)) * 100));
 
+  function MatrixPreview() {
+    const matrix = [[3, 5, 8], [6, null, 16], [9, 15, 24]];
+    return (
+      <div className="flex flex-col items-center gap-3 select-none w-full">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+        <div className="grid gap-1.5 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+          {matrix.map((row, r) => (
+            <div key={r} className="grid grid-cols-3 gap-1.5">
+              {row.map((cell, c) => (
+                <div key={c} className={`w-14 h-14 rounded-xl border flex items-center justify-center text-lg font-black ${
+                  cell === null
+                    ? 'border-dashed border-cyan-300 bg-cyan-50 text-cyan-400 text-base'
+                    : 'border-slate-200 bg-slate-100 text-slate-900'
+                }`}>
+                  {cell === null ? '?' : cell}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-slate-400 font-medium">Find the pattern, fill the cell!</p>
+      </div>
+    );
+  }
+
+  if (status === 'ready') {
+    return (
+      <GameStartScreen
+        title="Matrix Puzzle Lab"
+        emoji="🔢"
+        category="Patterns"
+        description="Inspect a 3×3 matrix, find the hidden pattern rule, and fill in the missing cell. Choose from 4 options — you have 18 seconds and 3 lives!"
+        stats={[
+          { label: 'Rounds', value: totalRounds },
+          { label: 'Timer', value: '18s' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #7c3aed, #8b5cf6)"
+        onStart={startGame}
+      >
+        <MatrixPreview />
+      </GameStartScreen>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f4f7fb] px-3 py-4 text-slate-900 sm:px-5 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -364,7 +410,7 @@ export default function PatternPuzzle() {
           </section>
         ) : (
           <div className="grid gap-4 lg:grid-cols-[1fr_330px]">
-            <section className="relative space-y-4">
+            <section className="space-y-4">
               <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <div>
@@ -386,20 +432,6 @@ export default function PatternPuzzle() {
                 onCellSelect={onCellSelect}
               />
 
-              {status === 'ready' && (
-                <div className="absolute inset-0 grid place-items-center rounded-xl bg-white/80 p-6 text-center backdrop-blur-sm">
-                  <div className="max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                    <Grid3X3 size={46} className="mx-auto mb-4 text-violet-700" />
-                    <h2 className="font-display text-3xl font-black text-slate-950">Matrix Puzzle Lab</h2>
-                    <p className="mt-3 text-sm font-semibold leading-relaxed text-slate-600">
-                      Inspect the matrix, select the missing cell, then choose the value that satisfies the rule.
-                    </p>
-                    <button onClick={startGame} className="mt-6 rounded-lg bg-violet-700 px-5 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-violet-800">
-                      Start Lab
-                    </button>
-                  </div>
-                </div>
-              )}
             </section>
 
             <aside className="space-y-4">

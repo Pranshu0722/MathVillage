@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 
 function getGridSize(grade) {
   if (grade <= 2) return 4;
@@ -17,8 +18,39 @@ function genTreasure(gridSize){
   return {x:Math.floor(Math.random()*gridSize),y:Math.floor(Math.random()*gridSize)};
 }
 
-function genClue(treasure){
-  return `Find the treasure at (${treasure.x}, ${treasure.y})`;
+function MapPreview() {
+  const size = 4;
+  return (
+    <div className="flex flex-col items-center gap-3 select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="rounded-xl bg-slate-800/80 p-3 border border-white/10">
+        <p className="text-yellow-400 font-black text-sm text-center mb-2">Go to (2, 3)</p>
+        <div className="flex flex-col-reverse">
+          {Array.from({ length: size + 1 }, (_, y) => (
+            <div key={y} className="flex items-center">
+              <span className="text-slate-500 text-[10px] w-4 text-right mr-1">{y}</span>
+              {Array.from({ length: size + 1 }, (_, x) => {
+                const isTarget = x === 2 && y === 3;
+                return (
+                  <div key={x} className={`w-7 h-7 m-0.5 rounded flex items-center justify-center text-xs ${
+                    isTarget ? 'bg-yellow-500/60 border border-yellow-400 text-yellow-200' : 'bg-white/5 border border-white/10 text-slate-600'
+                  }`}>
+                    {isTarget ? '💎' : y === 0 && x === 0 ? '⚓' : '·'}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+          <div className="flex ml-5">
+            {Array.from({ length: size + 1 }, (_, x) => (
+              <span key={x} className="text-slate-500 text-[10px] w-8 text-center">{x}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <p className="text-sm text-slate-400 font-medium">Tap the correct coordinate!</p>
+    </div>
+  );
 }
 
 export default function CoordinateTreasure() {
@@ -30,7 +62,7 @@ export default function CoordinateTreasure() {
   const [selected,setSelected]=useState(null);
   const [score,setScore]=useState(0);
   const [round,setRound]=useState(1);
-  const [gameState,setGameState]=useState('playing');
+  const [gameState,setGameState]=useState('start');
   const [feedback,setFeedback]=useState(null);
   const {addXP}=usePlayerStore();
   const TOTAL=totalRounds;
@@ -50,6 +82,26 @@ export default function CoordinateTreasure() {
       else{setRound(r=>r+1);setTreasure(nt);setSelected(null);setFeedback(null);}
     },1200);
   };
+
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Treasure Map"
+        emoji="🗺️"
+        category="Coordinates"
+        description="The treasure map gives you a coordinate (x, y). Find that exact point on the grid and tap it to claim the treasure. X goes across, Y goes up!"
+        stats={[
+          { label: 'Rounds', value: TOTAL },
+          { label: 'XP each', value: '30' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #d97706, #f59e0b)"
+        onStart={() => setGameState('playing')}
+      >
+        <MapPreview />
+      </GameStartScreen>
+    );
+  }
 
   return(
     <div className="min-h-screen flex flex-col items-center p-4">
@@ -71,7 +123,6 @@ export default function CoordinateTreasure() {
             <p className="text-slate-500 text-xs mt-1">X = across → | Y = up ↑</p>
           </div>
 
-          {/* Grid */}
           <div className="glass-panel p-4 overflow-auto">
             <div className="flex flex-col-reverse">
               {Array.from({length:gridSize+1},(_,y)=>(

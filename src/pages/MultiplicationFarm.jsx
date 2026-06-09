@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
 import { safeRecordAttempt as recordAttempt } from '../lib/safeRecordAttempt';
 import { skillForGame } from '../engine/gameSkills';
+import GameStartScreen from '../components/GameStartScreen';
 
 const SKILL = skillForGame('MultiplicationFarm'); // 'multiplication'
 
@@ -17,6 +18,26 @@ function genQ(grade) {
   return {rows,cols,answer:rows*cols};
 }
 
+function FarmPreview() {
+  const rows = 3, cols = 4;
+  return (
+    <div className="flex flex-col items-center gap-3 select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="flex flex-col gap-1">
+        {Array.from({ length: rows }).map((_, r) => (
+          <div key={r} className="flex gap-1">
+            {Array.from({ length: cols }).map((_, c) => (
+              <span key={c} className="text-xl leading-none">🌻</span>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="text-2xl font-black text-slate-800">{rows} × {cols} = ?</div>
+      <p className="text-sm text-slate-400 font-medium">Count the crops!</p>
+    </div>
+  );
+}
+
 export default function MultiplicationFarm() {
   const { user } = useAuthStore();
   const grade = normalizeGrade(user?.grade);
@@ -25,7 +46,7 @@ export default function MultiplicationFarm() {
   const [selected,setSelected]=useState(null);
   const [score,setScore]=useState(0);
   const [round,setRound]=useState(1);
-  const [gameState,setGameState]=useState('playing');
+  const [gameState,setGameState]=useState('start');
   const [feedback,setFeedback]=useState(null);
   const {addXP}=usePlayerStore();
   const TOTAL_ROUNDS=totalRounds;
@@ -57,6 +78,26 @@ export default function MultiplicationFarm() {
 
   const crop='🌻';
   const grid=Array.from({length:q.rows},(_,r)=>Array.from({length:q.cols},(_,c)=>({r,c})));
+
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Multiplication Farm"
+        emoji="🌻"
+        category="Multiplication"
+        description="A grid of sunflower crops shows rows × columns. Count the total crops by multiplying, then pick the right answer to complete the harvest!"
+        stats={[
+          { label: 'Rounds', value: TOTAL_ROUNDS },
+          { label: 'XP each', value: '20' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #10b981, #34d399)"
+        onStart={() => setGameState('playing')}
+      >
+        <FarmPreview />
+      </GameStartScreen>
+    );
+  }
 
   return(
     <div className="min-h-screen flex flex-col items-center p-4">

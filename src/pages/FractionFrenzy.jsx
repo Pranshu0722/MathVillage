@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, CircleHelp, CheckCircle2, Trophy, Flame, ArrowRightLeft, Sparkles } from 'lucide-react';
+import GameStartScreen from '../components/GameStartScreen';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
 import { useGamification } from '../hooks/useGamification';
@@ -280,51 +281,21 @@ export default function FractionFrenzy() {
 
   if (!started) {
     return (
-      <div className="max-w-5xl mx-auto px-3 md:px-6 pt-4 pb-20">
-        <div className="flex items-center justify-between gap-3 mb-5">
-          <Link to="/student" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-sm font-bold text-[#1e293b]">
-            <ChevronLeft size={18} /> Back
-          </Link>
-          <div className="text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-[#94a3b8]">Grade {grade}</div>
-        </div>
-
-        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-4 lg:gap-6 items-stretch">
-          <div className="bg-white rounded-[28px] border border-white shadow-[0_12px_36px_rgba(15,23,42,0.06)] p-5 sm:p-7 overflow-hidden relative">
-            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#FFCA42] via-[#FF8A5B] to-[#5EDAD0]" />
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF7ED] text-[#C2410C] text-[11px] font-black uppercase tracking-wider">
-              <Sparkles size={14} /> Fraction logic
-            </div>
-            <h1 className="mt-4 text-3xl sm:text-4xl font-black text-[#1e293b] leading-tight">Fraction Frenzy</h1>
-            <p className="mt-3 text-sm sm:text-base text-[#475569] font-medium leading-7 max-w-2xl">
-              A focused practice loop: simplify, compare, and rank fractions. Each round gives immediate feedback and rewards consistent streaks, not just speed.
-            </p>
-
-            <div className="grid sm:grid-cols-3 gap-3 mt-6">
-              {[
-                { label: 'Rounds', value: totalRounds },
-                { label: 'Focus', value: 'Accuracy' },
-                { label: 'Reward', value: 'XP + Coins' },
-              ].map((item) => (
-                <div key={item.label} className="rounded-2xl bg-[#f8fafc] border border-slate-100 p-4">
-                  <div className="text-[10px] font-black uppercase tracking-widest text-[#94a3b8]">{item.label}</div>
-                  <div className="mt-2 text-xl font-black text-[#1e293b]">{item.value}</div>
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setStarted(true)}
-              className="mt-7 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-[#FFCA42] to-[#FF7052] text-white font-black shadow-[0_12px_24px_rgba(255,112,82,0.25)] hover:scale-[1.01] active:scale-[0.99] transition-transform"
-            >
-              Start Challenge <ArrowRightLeft size={18} />
-            </button>
-          </div>
-
-          <div className="bg-white rounded-[28px] border border-white shadow-[0_12px_36px_rgba(15,23,42,0.06)] p-5 sm:p-7 flex items-center justify-center">
-            <FractionPreview round={currentRound} />
-          </div>
-        </div>
-      </div>
+      <GameStartScreen
+        title="Fraction Frenzy"
+        emoji="🍕"
+        category="Fractions"
+        description="Simplify, compare, and rank fractions across focused rounds. Each answer gives instant feedback and rewards consistent streaks — accuracy matters more than speed!"
+        stats={[
+          { label: 'Rounds', value: totalRounds },
+          { label: 'Focus', value: 'Accuracy' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #FFCA42, #FF7052)"
+        onStart={() => setStarted(true)}
+      >
+        <FractionPreview round={currentRound} />
+      </GameStartScreen>
     );
   }
 

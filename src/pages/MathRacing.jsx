@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { usePlayerStore } from '../store/usePlayerStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { normalizeGrade } from '../lib/gradeUtils';
+import GameStartScreen from '../components/GameStartScreen';
 
 function genQ(grade) {
   const min = grade <= 2 ? 1 : 2;
@@ -11,6 +12,25 @@ function genQ(grade) {
   const a=Math.floor(Math.random()*(max - min + 1))+min;
   const b=Math.floor(Math.random()*(max - min + 1))+min;
   return {a,b,answer:a*b};
+}
+
+function RacingPreview() {
+  return (
+    <div className="flex flex-col items-center gap-4 w-full select-none">
+      <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Preview</p>
+      <div className="w-full rounded-xl bg-amber-900/20 border border-amber-700/30 p-3 relative overflow-hidden">
+        <div className="w-full h-8 bg-amber-800/20 rounded-full border border-amber-700/30 relative">
+          <span className="absolute left-[38%] top-1 text-xl">🛒</span>
+          <span className="absolute right-2 top-1 text-lg">🏁</span>
+        </div>
+        <div className="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
+          <div className="h-full rounded-full bg-gradient-to-r from-orange-500 to-yellow-400" style={{ width: '40%' }} />
+        </div>
+      </div>
+      <div className="text-4xl font-black text-slate-800">6 × 7 = ?</div>
+      <p className="text-sm text-slate-400 font-medium">Each correct answer moves the cart!</p>
+    </div>
+  );
 }
 
 export default function MathRacing() {
@@ -22,7 +42,7 @@ export default function MathRacing() {
   const [cartPos,setCartPos]=useState(0);
   const [score,setScore]=useState(0);
   const [timeLeft,setTimeLeft]=useState(baseTime);
-  const [gameState,setGameState]=useState('playing');
+  const [gameState,setGameState]=useState('start');
   const [feedback,setFeedback]=useState(null);
   const {addXP}=usePlayerStore();
   const inputRef=useRef(null);
@@ -37,7 +57,7 @@ export default function MathRacing() {
   useEffect(()=>{
     if(cartPos>=MAX)setGameState('won');
   },[cartPos]);
-  useEffect(()=>{if(gameState!=='playing')addXP(score+cartPos,'Math Racing',score+cartPos,Math.min(100,score),'Arithmetic');},[gameState]);
+  useEffect(()=>{if(gameState==='lost'||gameState==='won')addXP(score+cartPos,'Math Racing',score+cartPos,Math.min(100,score),'Arithmetic');},[gameState]);
 
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -54,6 +74,26 @@ export default function MathRacing() {
     setTimeout(()=>{setFeedback(null);setQ(genQ(grade));},500);
   };
 
+  if (gameState === 'start') {
+    return (
+      <GameStartScreen
+        title="Math Racing"
+        emoji="🐂"
+        category="Multiplication"
+        description="Solve multiplication questions to speed your cart along the track. Reach the 100% finish line before time runs out — or score as high as you can!"
+        stats={[
+          { label: 'Time', value: `${baseTime}s` },
+          { label: 'Goal', value: '100%' },
+          { label: 'Grade', value: grade },
+        ]}
+        gradient="linear-gradient(135deg, #f97316, #f59e0b)"
+        onStart={() => setGameState('playing')}
+      >
+        <RacingPreview />
+      </GameStartScreen>
+    );
+  }
+
   return(
     <div className="min-h-screen flex flex-col items-center p-4">
       <div className="w-full max-w-md mb-4 flex items-center justify-between">
@@ -69,7 +109,6 @@ export default function MathRacing() {
 
       {gameState==='playing'&&(
         <div className="w-full max-w-md">
-          {/* Race track */}
           <div className="glass-panel p-5 mb-5" style={{background:'linear-gradient(180deg,rgba(120,53,15,0.3) 0%,rgba(30,41,59,0.7) 100%)'}}>
             <p className="text-slate-400 text-xs mb-2 text-center">🏁 Reach the finish line!</p>
             <div className="w-full h-10 bg-amber-900/30 rounded-full border border-amber-700/30 relative overflow-hidden mb-3">
